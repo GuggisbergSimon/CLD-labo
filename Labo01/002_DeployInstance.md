@@ -74,6 +74,145 @@ Note : Refer to the infra schema to add mandatory inbound rules for your subnet.
 
 * [Get official doc](https://bitnami.com/support/aws)
 
+```
+aws ec2 run-instances \
+    --image-id ami-00b3a1b7cfab20134 \
+    --count 1 \
+    --instance-type t3.micro \
+    --key-name CLD_KEY_DRUPAL_DEVOPSTEAM18 \
+    --security-group-ids sg-060333a9f2656e446 \
+    --subnet-id subnet-0d395759a91c4d4b8 \
+    --block-device-mappings 'DeviceName=/dev/sda1,Ebs={VolumeSize=10}' \
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=EC2_PRIVATE_DRUPAL_DEVOPSTEAM18}]'
+```
+
+[OUTPUT]
+
+```json
+{
+    "Groups": [],
+    "Instances": [
+        {
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-00b3a1b7cfab20134",
+            "InstanceId": "i-04f6ffaec28f2162c",
+            "InstanceType": "t3.micro",
+            "KeyName": "CLD_KEY_DRUPAL_DEVOPSTEAM18",
+            "LaunchTime": "2024-03-07T16:04:23+00:00",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "eu-west-3a",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-10-0-18-12.eu-west-3.compute.internal",
+            "PrivateIpAddress": "10.0.18.12",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+                        "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-0d395759a91c4d4b8",
+            "VpcId": "vpc-03d46c285a2af77ba",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "2286c13c-1317-4260-a77a-8664368b8da3",
+            "EbsOptimized": false,
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2024-03-07T16:04:23+00:00",
+                        "AttachmentId": "eni-attach-0cf225747c5b173d3",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching",
+                        "NetworkCardIndex": 0
+                                            },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "SG-PRIVATE-DRUPAL-DEVOPSTEAM18",
+                            "GroupId": "sg-060333a9f2656e446"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "06:aa:e2:89:5b:eb",
+                    "NetworkInterfaceId": "eni-030724b67f5b8ebf8",
+                    "OwnerId": "709024702237",
+                    "PrivateIpAddress": "10.0.18.12",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateIpAddress": "10.0.18.12"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-0d395759a91c4d4b8",
+                                        "VpcId": "vpc-03d46c285a2af77ba",
+                    "InterfaceType": "interface"
+                }
+            ],
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "SG-PRIVATE-DRUPAL-DEVOPSTEAM18",
+                    "GroupId": "sg-060333a9f2656e446"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "EC2_PRIVATE_DRUPAL_DEVOPSTEAM18"
+                }
+                            ],
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 1,
+                "ThreadsPerCore": 2
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+                "State": "pending",
+                "HttpTokens": "optional",
+                "HttpPutResponseHopLimit": 1,
+                "HttpEndpoint": "enabled",
+                "HttpProtocolIpv6": "disabled",
+                "InstanceMetadataTags": "disabled"
+            },
+            "EnclaveOptions": {
+                "Enabled": false
+            },
+            "PrivateDnsNameOptions": {
+                "HostnameType": "ip-name",
+                                "EnableResourceNameDnsARecord": false,
+                "EnableResourceNameDnsAAAARecord": false
+            },
+            "MaintenanceOptions": {
+                "AutoRecovery": "default"
+            },
+            "CurrentInstanceBootMode": "legacy-bios"
+        }
+    ],
+    "OwnerId": "709024702237",
+    "ReservationId": "r-0b468a21f0e1109de"
+}
+```
+
 ---
 
 ### Task 04 - SSH Access to your private Drupal Instance
@@ -87,6 +226,15 @@ Note : Refer to the infra schema to add mandatory inbound rules for your subnet.
 ssh devopsteam<xx>@15.188.43.46 -i CLD_KEY_DMZ_DEVOPSTEAM<xx>.pem -L 2223:10.0.<xx>.10:22
 ```
 
+[INPUT]
+
+```bash
+ssh devopsteam18@15.188.43.46 \
+    -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem \
+    -NvL 1337:10.0.18.12:22 \
+    -o IdentitiesOnly=true
+```
+
 * Create the connection string to your drupal instance
 
 ```
@@ -94,6 +242,14 @@ ssh devopsteam<xx>@15.188.43.46 -i CLD_KEY_DMZ_DEVOPSTEAM<xx>.pem -L 2223:10.0.<
 
 //Sample
 ssh bitnami@localhost -p 2223 -i CLD_KEY_DRUPAL_DEVOPSTEAM<xx>.pem
+```
+
+[INPUT]
+
+```bash
+ssh bitnami@localhost -p 1337 \
+    -i .ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem \
+    -o IdentitiesOnly=true
 ```
 
 * Renew your ssh connection first, then launch a second ssh session for your Drupal instance
@@ -183,6 +339,45 @@ you get the html content of the home page
 ssh devopsteam<xx>@15.188.43.46 -i CLD_KEY_DMZ_DEVOPSTEAM<xx>.pem -L 2223:10.0.<xx>.10:22 -L 888:10.0.<xx>.10:8080
 ```
 
+[INPUT]
+
+```bash
+ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -NvL 8888:10.0.18.12:8080
+```
+
 * Test directly on your localhost, using your browser
 
+```bash
+curl localhost:8888
+```
+
 ![DRUPAL_HOME_PAGE](./img/DRUPAL_HOME_PAGE.PNG)
+
+#### STOP THE INSTANCE
+
+```bash
+aws ec2 stop-instances --instance-ids i-04f6ffaec28f2162c
+```
+
+#### CREATE AMI FROM INSTANCE
+
+```bash
+aws ec2 create-image \
+    --instance-id i-04f6ffaec28f2162c \
+    --name "AMI_PRIVATE_DRUPAL_DEVOPSTEAM18" \
+    --description "Drupal AMI for week lab1/week3"
+```
+
+[OUTPUT]
+
+```json
+{
+    "ImageId": "ami-058adb4d984c76f24"
+}
+```
+
+#### TERMINATE THE INSTANCE
+
+```bash
+aws ec2 terminate-instances --instance-ids i-04f6ffaec28f2162c
+```
