@@ -293,13 +293,19 @@ aws ec2 associate-route-table \
 [INPUT]
 
 ```bash
-
+aws ec2 create-route \
+    --route-table-id rtb-02b205041756bb30e \
+    --destination-cidr-block 0.0.0.0/0 \
+    --instance-id i-085f07b949466919e \
+    --dry-run
 ```
 
 [OUTPUT]
 
-```json
-
+```bash
+{
+    "Return": true
+}
 ```
 
 ### CREATE SECURITY GROUP
