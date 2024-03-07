@@ -295,10 +295,9 @@ aws ec2 associate-route-table \
 
 ```bash
 aws ec2 create-route \
-    --route-table-id rtb-02b205041756bb30e \
+    --route-table-id rtb-095da131e24ac8d10 \
     --destination-cidr-block 0.0.0.0/0 \
-    --instance-id i-085f07b949466919e \
-    --dry-run
+    --instance-id i-085f07b949466919e
 ```
 
 [OUTPUT]
@@ -318,12 +317,21 @@ aws ec2 create-security-group \
     --group-name SG-PRIVATE-DRUPAL-DEVOPSTEAM18 \
     --description "Allow ports 22 and 8080" \
     --vpc-id vpc-03d46c285a2af77ba \
-    --tag-specifications 'ResourceType=security-group,Tags=[{Key=Name,Value=SG-DEVOPSTEAM18}]'
+    --tag-specifications 'ResourceType=security-group,Tags=[{Key=Name,Value=SG-PRIVATE-DRUPAL-DEVOPSTEAM18}]'
 ```
 
 [OUTPUT]
 
 ```json
+{
+    "GroupId": "sg-060333a9f2656e446",
+    "Tags": [
+        {
+            "Key": "Name",
+            "Value": "SG-PRIVATE-DRUPAL-DEVOPSTEAM18"
+        }
+    ]
+}
 ```
 
 ### ADD SECURITY GROUP RULES
@@ -332,7 +340,7 @@ aws ec2 create-security-group \
 
 ```bash
 aws ec2 authorize-security-group-ingress \
-    --group-id sg-06a717f4716484e02 \
+    --group-id sg-060333a9f2656e446 \
     --protocol tcp \
     --port 22
 ```
@@ -340,13 +348,17 @@ aws ec2 authorize-security-group-ingress \
 [OUTPUT]
 
 ```json
+{
+    "Return": true,
+    "SecurityGroupRules": []
+}
 ```
 
 [INPUT]
 
 ```bash
 aws ec2 authorize-security-group-ingress \
-    --group-id sg-06a717f4716484e02 \
+    --group-id sg-060333a9f2656e446 \
     --protocol tcp \
     --port 8080
 ```
@@ -354,4 +366,8 @@ aws ec2 authorize-security-group-ingress \
 [OUTPUT]
 
 ```json
+{
+    "Return": true,
+    "SecurityGroupRules": []
+}
 ```
