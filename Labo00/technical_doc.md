@@ -190,8 +190,7 @@ aws ec2 describe-internet-gateways --output table --region eu-south-1
 aws ec2 create-subnet \
     --vpc-id vpc-03d46c285a2af77ba \
     --cidr-block 10.0.18.0/28 \
-    --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=SUB-DEVOPSTEAM18}]' \
-    --availability-zone eu-west-3a
+    --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=SUB-PRIVATE-DEVOPSTEAM18}]'
 ```
 
 [OUTPUT]
@@ -206,7 +205,7 @@ aws ec2 create-subnet \
         "DefaultForAz": false,
         "MapPublicIpOnLaunch": false,
         "State": "available",
-        "SubnetId": "subnet-09242c27b33c8ded4",
+        "SubnetId": "subnet-0d395759a91c4d4b8",
         "VpcId": "vpc-03d46c285a2af77ba",
         "OwnerId": "709024702237",
         "AssignIpv6AddressOnCreation": false,
@@ -214,10 +213,10 @@ aws ec2 create-subnet \
         "Tags": [
             {
                 "Key": "Name",
-                "Value": "SUB-DEVOPSTEAM18"
+                "Value": "SUB-PRIVATE-DEVOPSTEAM18"
             }
         ],
-        "SubnetArn": "arn:aws:ec2:eu-west-3:709024702237:subnet/subnet-09242c27b33c8ded4",
+        "SubnetArn": "arn:aws:ec2:eu-west-3:709024702237:subnet/subnet-0d395759a9$
         "EnableDns64": false,
         "Ipv6Native": false,
         "PrivateDnsNameOptionsOnLaunch": {
@@ -229,17 +228,15 @@ aws ec2 create-subnet \
 }
 ```
 
-The above command successfully created a subnet in the VPC with the ID `vpc-03d46c285a2af77ba` and the CIDR block `10.0.18.0/28` on the availability zone `eu-west-3a`.
-
 ### CREATE ROUTE TABLE
 
 [INPUT]
 
 ```bash
 aws ec2 create-route-table \
-                             --vpc-id vpc-03d46c285a2af77ba \
-                             --region eu-west-3 \
-                             --dry-run
+    --vpc-id vpc-03d46c285a2af77ba \
+    --region eu-west-3 \
+    --tag-specifications 'ResourceType=route-table,Tags=[{Key=Name,Value=RTBLE-PRIVATE-DRUPAL-DEVOPSTEAM18}]'
 ```
 
 [OUTPUT]
@@ -249,7 +246,7 @@ aws ec2 create-route-table \
     "RouteTable": {
         "Associations": [],
         "PropagatingVgws": [],
-        "RouteTableId": "rtb-02b205041756bb30e",
+        "RouteTableId": "rtb-095da131e24ac8d10",
         "Routes": [
             {
                 "DestinationCidrBlock": "10.0.0.0/16",
@@ -258,11 +255,16 @@ aws ec2 create-route-table \
                 "State": "active"
             }
         ],
-        "Tags": [],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "RTBLE-PRIVATE-DRUPAL-DEVOPSTEAM18"
+            }
+        ],
         "VpcId": "vpc-03d46c285a2af77ba",
         "OwnerId": "709024702237"
     },
-    "ClientToken": "3a27037c-7472-471e-8a09-40c35b767c59"
+    "ClientToken": "bcbe9622-d0de-45f8-a2c2-a0ddc15e819a"
 }
 ```
 
@@ -272,16 +274,15 @@ aws ec2 create-route-table \
 
 ```bash
 aws ec2 associate-route-table \
-    --route-table-id rtb-02b205041756bb30e\
-    --subnet-id subnet-09242c27b33c8ded4 \
-    --dry-run
+    --route-table-id rtb-095da131e24ac8d10 \
+    --subnet-id subnet-0d395759a91c4d4b8 \
 ```
 
 [OUTPUT]
 
 ```json
 {
-    "AssociationId": "rtbassoc-07ec422161e54ec71",
+    "AssociationId": "rtbassoc-0db6acfdbad9f5ff5",
     "AssociationState": {
         "State": "associated"
     }
@@ -314,7 +315,7 @@ aws ec2 create-route \
 
 ```bash
 aws ec2 create-security-group \
-    --group-name SG-DEVOPSTEAM18 \
+    --group-name SG-PRIVATE-DRUPAL-DEVOPSTEAM18 \
     --description "Allow ports 22 and 8080" \
     --vpc-id vpc-03d46c285a2af77ba \
     --tag-specifications 'ResourceType=security-group,Tags=[{Key=Name,Value=SG-DEVOPSTEAM18}]'
@@ -323,9 +324,6 @@ aws ec2 create-security-group \
 [OUTPUT]
 
 ```json
-{
-    "GroupId": "sg-06a717f4716484e02"
-}
 ```
 
 ### ADD SECURITY GROUP RULES
@@ -342,10 +340,6 @@ aws ec2 authorize-security-group-ingress \
 [OUTPUT]
 
 ```json
-{
-    "Return": true,
-    "SecurityGroupRules": []
-}
 ```
 
 [INPUT]
@@ -360,8 +354,4 @@ aws ec2 authorize-security-group-ingress \
 [OUTPUT]
 
 ```json
-{
-    "Return": true,
-    "SecurityGroupRules": []
-}
 ```
