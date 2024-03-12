@@ -17,4 +17,5 @@ _Duration of this lab: 6 periods_
 ### TODO
 
 * [Task 001 - Accesses](./001_Accesses.md)
-* [Task 002 - Deploy Instance](./001_DeployInstance.md)
+* [Task 002 - Deploy Instance](./002_DeployInstance.md)
+* [Task 003 - Questions](./003_Questions.md)
