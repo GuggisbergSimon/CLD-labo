@@ -1,8 +1,6 @@
 # Labo 1 - Questions
 
-* What is the smallest and the biggest instance type (in terms of
-  virtual CPUs and memory) that you can choose from when creating an
-  instance?
+## What is the smallest and the biggest instance type (in terms of virtual CPUs and memory) that you can choose from when creating an instance?
 
 ```txt
 The smallest instance type is t2.nano with 1 vCPU and 0.5 GB of memory.
@@ -23,11 +21,10 @@ instance types in a region.
 ```
 
 Sources:
-[Instance types](https://aws.amazon.com/ec2/instance-types/)
-[High Memory Instances](https://aws.amazon.com/ec2/instance-types/high-memory/)
+- [Instance types](https://aws.amazon.com/ec2/instance-types/)
+- [High Memory Instances](https://aws.amazon.com/ec2/instance-types/high-memory/)
 
-* How long did it take for the new instance to get into the _running_
-  state?
+## How long did it take for the new instance to get into the _running_ state?
 
 ```txt
 It took about a minute. Note that this metric may vary depending on the region, 
@@ -36,17 +33,15 @@ EC2's current load
 ```
 
 Sources:
-Empirical observation
+- Empirical observation
 [EC2 Instance lifecycle](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html)
 
 Good read:
-[EC2 Boot Time Benchmarking](https://www.daemonology.net/blog/2021-08-12-EC2-boot-time-benchmarking.html)
+- [EC2 Boot Time Benchmarking](https://www.daemonology.net/blog/2021-08-12-EC2-boot-time-benchmarking.html)
 
-* Using the commands to explore the machine listed earlier, respond to
-  the following questions and explain how you came to the answer:
+## What's the difference between time here in Switzerland and the time set on the machine?
 
-  * What's the difference between time here in Switzerland and the time set on
-    the machine?
+Using the commands to explore the machine listed earlier, respond to the following questions and explain how you came to the answer:
 
 ```txt
 On Linux, the time zone can be querried by running either `date +%Z` or `timedatectl`.
@@ -60,10 +55,10 @@ time and the local time.
 ```
 
 Sources:
-[Set the time for your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html)
-[Current system time zone](https://www.baeldung.com/linux/current-system-time-zone)
+- [Set the time for your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html)
+- [Current system time zone](https://www.baeldung.com/linux/current-system-time-zone)
 
-  * What's the name of the hypervisor?
+## What's the name of the hypervisor?
 
 ```txt
 By looking at the output of dmesg on the machine, we get :
@@ -80,11 +75,10 @@ AWS that leverages the KVM technology.
 ```
 
 Sources:
-[What hypervisor is my linux VM running on](https://vcloudvision.com/2019/07/09/what-hypervisor-is-my-linux-vm-running-on/)
-[The Nitro System journey](https://docs.aws.amazon.com/whitepapers/latest/security-design-of-aws-nitro-system/the-nitro-system-journey.html)
+- [What hypervisor is my linux VM running on](https://vcloudvision.com/2019/07/09/what-hypervisor-is-my-linux-vm-running-on/)
+- [The Nitro System journey](https://docs.aws.amazon.com/whitepapers/latest/security-design-of-aws-nitro-system/the-nitro-system-journey.html)
 
-
-  * How much free space does the disk have?
+## How much free space does the disk have?
 
 ```bash
 bitnami@ip-10-0-18-8:~$ df -h --total | awk '/total/ {print $4}'
@@ -93,20 +87,20 @@ bitnami@ip-10-0-18-8:~$ df -h --total | awk '/total/ {print $4}'
 
 Source: common linux knowledge
 
-* Try to ping the instance ssh srv from your local machine. What do you see?
-  Explain. Change the configuration to make it work. Ping the
-  instance, record 5 round-trip times.
+## Try to ping the instance ssh srv from your local machine. What do you see?
+
+Explain. Change the configuration to make it work. Ping the instance, record 5 round-trip times.
 
 ```txt
 Ping from linux using `ping -O 15.188.43.46` displays "no answer yet [...]".
 Ping from Windows displays "Request timed out".
 ```
 
-* Determine the IP address seen by the operating system in the EC2
-  instance by running the `ifconfig` command. What type of address
-  is it? Compare it to the address displayed by the ping command
-  earlier. How do you explain that you can successfully communicate
-  with the machine?
+## Determine the IP address seen by the operating system in the EC2 instance by running the `ifconfig` command. 
+
+What type of address is it? 
+
+Compare it to the address displayed by the ping command earlier. How do you explain that you can successfully communicate with the machine?
 
 ```txt
 sudo ifconfig ens5 | grep inet
