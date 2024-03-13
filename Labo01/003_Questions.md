@@ -84,7 +84,10 @@ round-trip times.
 
 ```txt
 Ping from linux using `ping -O 15.188.43.46` displays "no answer yet [...]".
-Ping from Windows displays "Request timed out".
+Ping from Windows displays "Request timed out."
+Furthermore, a traceroute indicates us that the connection fails right before the amazon server.
+Inspecting the Security Group of the DMZ tells us that only allows SSH and HTTP are accepted inbound. Thus trying to ping the SSH server is bound to fail since it uses the ICMP.
+To make it work we'd need to edit the Security Group of the DMZ, one that is shared by all students.
 ```
 
 ## Determine the IP address seen by the operating system in the EC2 instance by running the `ifconfig` command.
