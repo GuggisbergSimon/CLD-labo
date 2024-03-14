@@ -50,7 +50,7 @@ Note : already done (team channel -> files/aws)
 |Key|Value|
 |:--|:--|
 |Name|SG-PRIVATE-DRUPAL-DEVOPSTEAM<xx>|
-|Outbound rules|Refer to infra schema|
+|Inbound rules|Refer to infra schema|
 |Outbound rules|Refer to infra schema|
 
 * Update the NAT Security group
@@ -306,7 +306,8 @@ file : /opt/bitnami/apache2/conf/bitnami/bitnami.conf
 ```
 
 ```
-file : /opt/bitnami/apache2/conf/vhosts/
+
+file : /opt/bitnami/apache2/conf/vhosts/drupal-vhost.conf
 <VirtualHost 127.0.0.1:8080 _default_:8080>
 ```
 
@@ -322,7 +323,7 @@ sudo /opt/bitnami/ctlscript.sh restart apache
 
 ```
 [INPUT]
-curl localhost
+curl 10.0.<XX>.10:8080
 
 [OUTPUT]
 you get the html content of the home page
@@ -338,6 +339,10 @@ you get the html content of the home page
 //Sample
 ssh devopsteam<xx>@15.188.43.46 -i CLD_KEY_DMZ_DEVOPSTEAM<xx>.pem -L 2223:10.0.<xx>.10:22 -L 888:10.0.<xx>.10:8080
 ```
+  
+* Test directly on your localhost, using your browser
+
+![DRUPAL_HOME_PAGE](./img/DRUPAL_HOME_PAGE.PNG)
 
 [INPUT]
 
