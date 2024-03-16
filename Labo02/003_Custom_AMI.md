@@ -10,12 +10,17 @@ Note : stop the instance before
 
 |Key|Value for GUI Only|
 |:--|:--|
-|Name|AMI_DRUPAL_DEVOPSTEAM[XX]_LABO02_RDS|
+|Name|AMI_DRUPAL_DEVOPSTEAM18_LABO02_RDS|
 |Description|Same as name value|
 
 ```bash
 [INPUT]
 
+
+aws ec2 create-image \
+    --instance-id <instance id of drupal server A> \
+    --name "AMI_PRIVATE_DRUPAL_DEVOPSTEAM18_LABO02_RDS" \
+    --description "AMI_PRIVATE_DRUPAL_DEVOPSTEAM18_LABO02_RDS"
 [OUTPUT]
 
 ```
@@ -28,11 +33,30 @@ Note : stop the instance before
 
 |Key|Value for GUI Only|
 |:--|:--|
-|Name|EC2_PRIVATE_DRUPAL_DEVOPSTEAM[XX]_B|
+|Name|EC2_PRIVATE_DRUPAL_DEVOPSTEAM18_B|
 |Description|Same as name value|
 
 ```bash
 [INPUT]
+aws ec2 run-instances \
+                   --image-id <new image id from last step> \
+                   --count 1 \
+                   --instance-type t3.micro \
+                   --key-name CLD_KEY_DRUPAL_DEVOPSTEAM18 \
+                   --private-ip-address 10.0.18.10 \
+                   --security-group-ids sg-060333a9f2656e446 sg-059f0b49f5ca4aab8 \
+                   --subnet-id subnet-0bd3b8cdf25b8042e \
+                   --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=EC2_PRIVATE_DRUPAL_DEVOPSTEAM18_A}]'
+
+aws ec2 run-instances \
+                   --image-id <new image id from last step> \
+                   --count 1 \
+                   --instance-type t3.micro \
+                   --key-name CLD_KEY_DRUPAL_DEVOPSTEAM18 \
+                   --private-ip-address 10.0.18.140 \
+                   --security-group-ids sg-060333a9f2656e446 sg-059f0b49f5ca4aab8 \
+                   --subnet-id subnet-04a2fc4d8de790824 \
+                   --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=EC2_PRIVATE_DRUPAL_DEVOPSTEAM18_B}]'
 
 [OUTPUT]
 ```

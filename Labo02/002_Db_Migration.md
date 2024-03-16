@@ -30,6 +30,7 @@ show databases;
 
 ```bash
 [INPUT]
+mariadb-dump --all-databases > dumpfile.sql
 
 [OUTPUT]
 ```
@@ -47,7 +48,7 @@ Note : you can do this from the Drupal Instance. Do not forget to set the "-h" p
 
 ```sql
 [INPUT]
-mysql -h <rds-end-point> -u <rds_admin_user> -p <db_target> < <pathToDumpFileToImport>.sql
+mysql -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com -u <rds_admin_user> -p <db_target> < dumpfile.sql
 
 [OUTPUT]
 ```
@@ -57,6 +58,7 @@ mysql -h <rds-end-point> -u <rds_admin_user> -p <db_target> < <pathToDumpFileToI
 ```bash
 [INPUT]
 //help : same settings.php as before
+cat sites/default/settings.php
 
 [OUTPUT]
 //at the end of the file you will find connection string parameters
@@ -85,17 +87,20 @@ Note : only calls from both private subnets must be approved.
 
 ```sql
 [INPUT]
-CREATE USER bn_drupal@'10.0.[XX].0/[Subnet Mask - A]]' IDENTIFIED BY '<Drupal password>';
+CREATE USER bn_drupal@'10.0.18.0/28' IDENTIFIED BY '<Drupal password>';
+CREATE USER bn_drupal@'10.0.18.128/28' IDENTIFIED BY '<Drupal password>';
 
 GRANT ALL PRIVILEGES ON bitnami_drupal.* TO '<yourNewUser>';
 
-//DO NOT FOREGT TO FLUSH PRIVILEGES
+//DO NOT FORGET TO FLUSH PRIVILEGES
 ```
 
 ```sql
 //validation
 [INPUT]
-SHOW GRANTS for 'bn_drupal'@'10.0.[XX].0/[yourMask]]';
+SHOW GRANTS for 'bn_drupal'@'10.0.18.0/28';
+
+SHOW GRANTS for 'bn_drupal'@'10.0.18.128/28';
 
 [OUTPUT]
 +----------------------------------------------------------------------------------------------------------------------------------+
@@ -110,7 +115,7 @@ SHOW GRANTS for 'bn_drupal'@'10.0.[XX].0/[yourMask]]';
 
 ```sql
 [INPUT]
-mysql -h dbi-devopsteam[XX].xxxxxxxx.eu-west-3.rds.amazonaws.com -u bn_drupal -p
+mysql -h dbi-devopsteam18.xxxxxxxx.eu-west-3.rds.amazonaws.com -u bn_drupal -p
 
 [INPUT]
 show databases;
