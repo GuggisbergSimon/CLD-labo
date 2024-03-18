@@ -13,15 +13,22 @@ Note : stop the instance before
 |Name|AMI_DRUPAL_DEVOPSTEAM18_LABO02_RDS|
 |Description|Same as name value|
 
-```bash
 [INPUT]
 
+```bash
+aws ec2 stop-instance --instance-id <instance_id>
 
 aws ec2 create-image \
     --instance-id <instance id of drupal server A> \
     --name "AMI_PRIVATE_DRUPAL_DEVOPSTEAM18_LABO02_RDS" \
     --description "AMI_PRIVATE_DRUPAL_DEVOPSTEAM18_LABO02_RDS"
+```
+
 [OUTPUT]
+
+<!-- TODO add output -->
+
+```bash
 
 ```
 
