@@ -234,13 +234,7 @@ mariadb -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com \
 ```bash
 mariadb -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com \
     -u bn_drupal -pa138798bc8d2f05ad6622993f87dad5684be936c93e9490df6bb5523bda52eba \
-    bitnami_drupal 
-```
-
-\[INPUT\]
-
-```sql
-SHOW DATABASES;
+    bitnami_drupal -e "SHOW DATABASES;"
 ```
 
 \[OUTPUT\]
@@ -252,7 +246,6 @@ SHOW DATABASES;
 | bitnami_drupal     |
 | information_schema |
 +--------------------+
-2 rows in set (0.001 sec)
 ```
 
 - Repeat the procedure to enable the instance on subnet 2 to also talk to your
