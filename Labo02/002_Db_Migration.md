@@ -34,8 +34,7 @@ You can also use this password to access the databases and any other component t
 Please refer to https://docs.bitnami.com/ for more details.
 ```
 
-**Note**: we were not able to connect to MariaDB using the 'user' account. One
-has to use the 'root' account. Dumping the users from MariaDB shows:
+**Note**: default MariaDB account is called 'root' and not 'user'. The default username returned in the precedent step is Bitnami's user, not MariaDB's one. Dumping the users from MariaDB shows:
 
 ```txt
 MariaDB [(none)]> SELECT User FROM mysql.user;
@@ -263,3 +262,5 @@ Cleanup:
 - Removed the `dumpfile.sql` file
 
 <!-- Anything else to cleanup ? -->
+
+- TODO `sudo systemctl disable mariadb`

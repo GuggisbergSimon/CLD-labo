@@ -213,8 +213,8 @@ ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
     -L 8081:10.0.18.140:8080 \
 
 # In different shells
-ssh bitnami@localhost -p 1337 -i .ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
-ssh bitnami@localhost -p 1338 -i .ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
+ssh bitnami@localhost -p 1337 -i ~/.ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
+ssh bitnami@localhost -p 1338 -i ~/.ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
 ```
 
 ## Check SQL Accesses
