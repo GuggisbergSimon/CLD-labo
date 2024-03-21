@@ -125,7 +125,31 @@ aws elbv2 create-target-group \
 \[OUTPUT\]
 
 ```json
-
+{
+    "TargetGroups": [
+        {
+            "TargetGroupArn": "arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152",
+            "TargetGroupName": "TG-DEVOPSTEAM18",
+            "Protocol": "HTTP",
+            "Port": 8080,
+            "VpcId": "vpc-03d46c285a2af77ba",
+            "HealthCheckProtocol": "HTTP",
+            "HealthCheckPort": "8080",
+            "HealthCheckEnabled": true,
+            "HealthCheckIntervalSeconds": 10,
+            "HealthCheckTimeoutSeconds": 5,
+            "HealthyThresholdCount": 2,
+            "UnhealthyThresholdCount": 2,
+            "HealthCheckPath": "/",
+            "Matcher": {
+                "HttpCode": "200"
+            },
+            "TargetType": "instance",
+            "ProtocolVersion": "HTTP1",
+            "IpAddressType": "ipv4"
+        }
+    ]
+}
 ```
 
 
@@ -164,7 +188,39 @@ aws elbv2 create-load-balancer \
 \[OUTPUT\]
 
 ```json
-
+{
+    "LoadBalancers": [
+        {
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:eu-west-3:709024702237:loadbalancer/app/ELB-DEVOPSTEAM18/f62cf8f19f5a69ea",
+            "DNSName": "internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com",
+            "CanonicalHostedZoneId": "Z3Q77PNBQS71R4",
+            "CreatedTime": "2024-03-21T14:51:19.290000+00:00",
+            "LoadBalancerName": "ELB-DEVOPSTEAM18",
+            "Scheme": "internal",
+            "VpcId": "vpc-03d46c285a2af77ba",
+            "State": {
+                "Code": "provisioning"
+            },
+            "Type": "application",
+            "AvailabilityZones": [
+                {
+                    "ZoneName": "eu-west-3b",
+                    "SubnetId": "subnet-04a2fc4d8de790824",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "eu-west-3a",
+                    "SubnetId": "subnet-0bd3b8cdf25b8042e",
+                    "LoadBalancerAddresses": []
+                }
+            ],
+            "SecurityGroups": [
+                "sg-0d7bbbdb111abe4b4"
+            ],
+            "IpAddressType": "ipv4"
+        }
+    ]
+}
 ```
 
 * Get the ELB FQDN (DNS NAME - A Record)
@@ -173,13 +229,14 @@ aws elbv2 create-load-balancer \
 
 ```bash
 aws elbv2 describe-load-balancers \
-    --names ELB-DEVOPSTEAM18
+    --names ELB-DEVOPSTEAM18 \
+    | jq '.LoadBalancers[0].DNSName'
 ```
 
 \[OUTPUT\]
 
 ```json
-
+"internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com"
 ```
 
 * Get the ELB deployment status
