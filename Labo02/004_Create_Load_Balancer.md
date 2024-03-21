@@ -239,6 +239,17 @@ aws elbv2 describe-load-balancers \
 "internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com"
 ```
 
+Register the Target Group for the two instances
+
+\[INPUT\]
+```bash
+aws elbv2 register-targets \
+--target-group-arn arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152 \
+--targets Id=i-08b03e25dbfb38598 Id=i-073e9bed9d50cf8d8
+```
+
+No output from this command.
+
 * Get the ELB deployment status
 
 Note : In the EC2 console select the Target Group. In the
