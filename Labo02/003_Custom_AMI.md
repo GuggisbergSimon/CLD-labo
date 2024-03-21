@@ -58,7 +58,7 @@ aws ec2 run-instances \
    --instance-type t3.micro \
    --key-name CLD_KEY_DRUPAL_DEVOPSTEAM18 \
    --private-ip-address 10.0.18.140 \
-   --security-group-ids sg-060333a9f2656e446 sg-059f0b49f5ca4aab8 \
+   --security-group-ids sg-060333a9f2656e446 \
    --subnet-id subnet-04a2fc4d8de790824 \
    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=EC2_PRIVATE_DRUPAL_DEVOPSTEAM18_B}]' \
    --placement AvailabilityZone=eu-west-3b
@@ -115,10 +115,6 @@ aws ec2 run-instances \
                     "Description": "",
                     "Groups": [
                         {
-                            "GroupName": "SG-PRIVATE-DRUPAL-DEVOPSTEAM18-RDS",
-                            "GroupId": "sg-059f0b49f5ca4aab8"
-                        },
-                        {
                             "GroupName": "SG-PRIVATE-DRUPAL-DEVOPSTEAM18",
                             "GroupId": "sg-060333a9f2656e446"
                         }
@@ -144,10 +140,6 @@ aws ec2 run-instances \
             "RootDeviceName": "/dev/xvda",
             "RootDeviceType": "ebs",
             "SecurityGroups": [
-                {
-                    "GroupName": "SG-PRIVATE-DRUPAL-DEVOPSTEAM18-RDS",
-                    "GroupId": "sg-059f0b49f5ca4aab8"
-                },
                 {
                     "GroupName": "SG-PRIVATE-DRUPAL-DEVOPSTEAM18",
                     "GroupId": "sg-060333a9f2656e446"
