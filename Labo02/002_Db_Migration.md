@@ -200,7 +200,7 @@ Note : only calls from both private subnets must be approved.
 ```bash
 mariadb -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com \
     -u admin -p'DEVOPSTEAM18!' \
-    -e "GRANT ALL PRIVILEGES ON bitnami_drupal.* TO 'bn_drupal'@'10.0.18.%' IDENTIFIED BY 'a138798bc8d2f05ad6622993f87dad5684be936c93e9490df6bb5523bda52eba';"
+    -e "GRANT ALL PRIVILEGES ON bitnami_drupal.* TO 'bn_drupal'@'10.0.18.0/255.255.255.240' IDENTIFIED BY 'a138798bc8d2f05ad6622993f87dad5684be936c93e9490df6bb5523bda52eba';"
 
 # DO NOT FORGET TO FLUSH PRIVILEGES -> Not needed when using "GRANT" on modern
 #                                      MariaDB versions
@@ -212,18 +212,18 @@ mariadb -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com \
 // Validation
 mariadb -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com \
     -u admin -p'DEVOPSTEAM18!' \
-    -e "SHOW GRANTS for bn_drupal@'10.0.18.%';"
+    -e "SHOW GRANTS for bn_drupal@'10.0.18.0/255.255.255.240';"
 ```
 
 \[OUTPUT\]
 
 ```txt
-+------------------------------------------------------------------------------------------------------------------+
-| Grants for bn_drupal@10.0.18.%                                                                                   |
-+------------------------------------------------------------------------------------------------------------------+
-| GRANT USAGE ON *.* TO `bn_drupal`@`10.0.18.%` IDENTIFIED BY PASSWORD '*66C49CE3DDF87D93C5987E78A9111E4667BA465E' |
-| GRANT ALL PRIVILEGES ON `bitnami_drupal`.* TO `bn_drupal`@`10.0.18.%`                                            |
-+------------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------------------------------------+
+| Grants for bn_drupal@10.0.18.0/255.255.255.240                                                                                   |
++----------------------------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `bn_drupal`@`10.0.18.0/255.255.255.240` IDENTIFIED BY PASSWORD '*66C49CE3DDF87D93C5987E78A9111E4667BA465E' |
+| GRANT ALL PRIVILEGES ON `bitnami_drupal`.* TO `bn_drupal`@`10.0.18.0/255.255.255.240`                                            |
++----------------------------------------------------------------------------------------------------------------------------------+
 ```
 
 ### Validate access (on the drupal instance)
@@ -250,9 +250,18 @@ mariadb -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com \
 - Repeat the procedure to enable the instance on subnet 2 to also talk to your
   RDS instance.
 
-There is no need to repeat the procedure because the `bn_drupal` user was
-created with permissions on the `10.0.18.%` subnet, which effectively includes
-only our two `/28` subnets using the wildcard character.
+\[INPUT\]
+
+```bash
+mariadb -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com \
+    -u admin -p'DEVOPSTEAM18!' \
+    -e "GRANT ALL PRIVILEGES ON bitnami_drupal.* TO 'bn_drupal'@'10.0.18.128/255.255.255.240' IDENTIFIED BY 'a138798bc8d2f05ad6622993f87dad5684be936c93e9490df6bb5523bda52eba';"
+
+// Validation
+mariadb -h dbi-devopsteam18.cshki92s4w5p.eu-west-3.rds.amazonaws.com \
+    -u bn_drupal -pa138798bc8d2f05ad6622993f87dad5684be936c93e9490df6bb5523bda52eba \
+    bitnami_drupal -e "SHOW DATABASES;"
+```
 
 ### Extra
 
@@ -260,7 +269,8 @@ Cleanup:
 
 - Removed the `stack/drupal/sites/default/settings.php.bak` file
 - Removed the `dumpfile.sql` file
-
-<!-- Anything else to cleanup ? -->
-
-- TODO `sudo systemctl disable mariadb`
+- Stop the Bitnami mysql service on the application servers (NB: this was done
+  _after_ creating the AMI because we did not think about it earlier. We
+  did not rebuild the AMI with the mysql service disabled.) This is done through
+  the Bitnami helper script.
+  `sudo /opt/bitnami/ctlscript.sh stop mariadb`
