@@ -248,6 +248,10 @@ aws elbv2 register-targets \
     --targets Id=i-08b03e25dbfb38598 Id=i-073e9bed9d50cf8d8
 ```
 
+No output from this command.
+
+We now need to create a listener to forward HTTP traffic from the load balancer to the target group
+
 \[INPUT\]
 ```bash
 aws elbv2 create-listener \
@@ -349,7 +353,7 @@ private teams channel
 ```bash
 // Updated connection string
 ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
-    -L 8080:[ELB DNS NAME]:80
+    -L 8080:internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com:8080
 ```
 
 * Test your application through your ssh tunneling
@@ -357,14 +361,18 @@ ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
 \[INPUT\]
 
 ```bash
-curl localhost:[local port forwarded]
-
+curl localhost:8080
 ```
 
 \[OUTPUT\]
 
-```json
-
+```html
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="--color--primary-hue:202;--color--primary-saturation:79%;--color--primary-lightness:50">
+  <head>
+    <meta charset="utf-8" />
+<meta name="Generator" content="Drupal 10 (https://www.drupal.org)" />
+...
 ```
 
 ### Questions - Analysis
@@ -373,21 +381,49 @@ curl localhost:[local port forwarded]
   an IP address using the `nslookup` command (works on Linux, macOS and Windows). Write
   the DNS name and the resolved IP Address(es) into the report.
 
+```bash
+nslookup internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com
 ```
-//TODO
+
+```bash
+Server:         172.26.32.1
+Address:        172.26.32.1#53
+
+Non-authoritative answer:
+Name:   internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com
+Address: 10.0.18.5
+Name:   internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com
+Address: 10.0.18.138
 ```
 
 * From your Drupal instance, identify the ip from which requests are sent by the Load Balancer.
 
 Help : execute `tcpdump port 8080`
 
+```bash
+ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
+-L 1337:10.0.18.10:22 \
+-L 8080:internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com:8080
 ```
-//TODO
+
+```bash
+16:50:08.458643 IP 10.0.18.138.32220 > 10.0.18.10.http-alt: Flags [P.], seq 1:131, ack 1, win 106, options [nop,nop,TS val 3394543151 ecr 2289361074], length 130: HTTP: GET / HTTP/1.1
+16:50:08.468892 IP 10.0.18.10.http-alt > 10.0.18.138.32220: Flags [P.], seq 1:5622, ack 131, win 489, options [nop,nop,TS val 2289361086 ecr 3394543151], length 5621: HTTP: HTTP/1.1 200 OK
 ```
+
+From this output we can identify the IP from which requests are sent by the load balancer : 10.0.18.138
 
 * In the Apache access log identify the health check accesses from the
   load balancer and copy some samples into the report.
 
+
+```bash
+cat /opt/bitnami/apache/logs/access_log
 ```
-//TODO
+
+```bash
+10.0.18.138 - - [21/Mar/2024:16:51:08 +0000] "GET / HTTP/1.1" 200 5147
+10.0.18.5 - - [21/Mar/2024:16:51:15 +0000] "GET / HTTP/1.1" 200 5147
 ```
+
+This is an example of the lines present in the access_log file on one of the bitnami instance
