@@ -290,6 +290,41 @@ aws elbv2 create-listener \
 
 No output from this command.
 
+Modify the SG-PRIVATE-DRUPAL-DEVOPSTEAM18 security group to allow traffic
+from the sg-060333a9f2656e446 security group.
+
+\[INPUT\]
+```bash
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-060333a9f2656e446 \
+    --protocol tcp \
+    --port 8080 \
+    --source-group sg-0d7bbbdb111abe4b4
+```
+
+\[OUTPUT\]
+
+```json
+{
+    "Return": true,
+    "SecurityGroupRules": [
+        {
+            "SecurityGroupRuleId": "sgr-05f3b378a1bd8fe54",
+            "GroupId": "sg-060333a9f2656e446",
+            "GroupOwnerId": "709024702237",
+            "IsEgress": false,
+            "IpProtocol": "tcp",
+            "FromPort": 8080,
+            "ToPort": 8080,
+            "ReferencedGroupInfo": {
+                "GroupId": "sg-0d7bbbdb111abe4b4",
+                "UserId": "709024702237"
+            }
+        }
+    ]
+}
+```
+
 * Get the ELB deployment status
 
 Note : In the EC2 console select the Target Group. In the
