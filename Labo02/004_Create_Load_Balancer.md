@@ -45,7 +45,7 @@ aws ec2 create-security-group \
 ```bash
 aws ec2 authorize-security-group-ingress \
     --group-id sg-0d7bbbdb111abe4b4 \
-    --ip-permissions IpProtocol=tcp,FromPort=8080,ToPort=8080,IpRanges='[{CidrIp=0.0.0.0/0, Description="Allow HTTP from DMZ"}]' \
+    --ip-permissions IpProtocol=tcp,FromPort=8080,ToPort=8080,IpRanges='[{CidrIp=10.0.0.0/28, Description="Allow HTTP from DMZ"}]' \
     --tag-specifications 'ResourceType=security-group-rule,Tags=[{Key=Name,Value=HTTP-ALLOW}, {Key=Description, Value=Allow HTTP from DMZ}]'
 ```
 
@@ -63,7 +63,7 @@ aws ec2 authorize-security-group-ingress \
             "IpProtocol": "tcp",
             "FromPort": 8080,
             "ToPort": 8080,
-            "CidrIpv4": "0.0.0.0/0",
+            "CidrIpv4": "10.0.0.0/28",
             "Description": "Allow HTTP from DMZ",
             "Tags": [
                 {
@@ -244,17 +244,17 @@ Register the Target Group for the two instances
 \[INPUT\]
 ```bash
 aws elbv2 register-targets \
---target-group-arn arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152 \
---targets Id=i-08b03e25dbfb38598 Id=i-073e9bed9d50cf8d8
+    --target-group-arn arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152 \
+    --targets Id=i-08b03e25dbfb38598 Id=i-073e9bed9d50cf8d8
 ```
 
 \[INPUT\]
 ```bash
 aws elbv2 create-listener \
---load-balancer-arn arn:aws:elasticloadbalancing:eu-west-3:709024702237:loadbalancer/app/ELB-DEVOPSTEAM18/f62cf8f19f5a69ea \
---protocol HTTP \
---port 8080 \
---default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152
+    --load-balancer-arn arn:aws:elasticloadbalancing:eu-west-3:709024702237:loadbalancer/app/ELB-DEVOPSTEAM18/f62cf8f19f5a69ea \
+    --protocol HTTP \
+    --port 8080 \
+    --default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152
 ```
 
 \[OUTPUT\]
@@ -290,8 +290,8 @@ aws elbv2 create-listener \
 
 No output from this command.
 
-Modify the SG-PRIVATE-DRUPAL-DEVOPSTEAM18 security group to allow traffic
-from the sg-060333a9f2656e446 security group.
+* Modify the SG-PRIVATE-DRUPAL-DEVOPSTEAM18 security group to allow traffic
+from the SG-DEVOPSTEAM18-LB security group.
 
 \[INPUT\]
 ```bash
@@ -323,6 +323,16 @@ aws ec2 authorize-security-group-ingress \
         }
     ]
 }
+```
+
+* Remove 8080 rules on SG-PRIVATE-DRUPAL-DEVOPSTEAM18
+
+```bash
+aws ec2 revoke-security-group-ingress \
+    --group-id sg-060333a9f2656e446 \
+    --protocol tcp \
+    --port 8080 \
+    --cidr 10.0.0.0/28
 ```
 
 * Get the ELB deployment status
