@@ -248,6 +248,46 @@ aws elbv2 register-targets \
 --targets Id=i-08b03e25dbfb38598 Id=i-073e9bed9d50cf8d8
 ```
 
+\[INPUT\]
+```bash
+aws elbv2 create-listener \
+--load-balancer-arn arn:aws:elasticloadbalancing:eu-west-3:709024702237:loadbalancer/app/ELB-DEVOPSTEAM18/f62cf8f19f5a69ea \
+--protocol HTTP \
+--port 8080 \
+--default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152
+```
+
+\[OUTPUT\]
+```json
+{
+    "Listeners": [
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:eu-west-3:709024702237:listener/app/ELB-DEVOPSTEAM18/f62cf8f19f5a69ea/7fd344d31b6d4f15",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:eu-west-3:709024702237:loadbalancer/app/ELB-DEVOPSTEAM18/f62cf8f19f5a69ea",
+            "Port": 8080,
+            "Protocol": "HTTP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152",
+                                "Weight": 1
+                            }
+                        ],
+                        "TargetGroupStickinessConfig": {
+                            "Enabled": false
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
 No output from this command.
 
 * Get the ELB deployment status
