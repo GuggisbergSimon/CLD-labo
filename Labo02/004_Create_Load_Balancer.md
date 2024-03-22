@@ -12,7 +12,7 @@ instances.
 
 | Key            | Value                     |
 | :------------- | :------------------------ |
-| Name           | SG-DEVOPSTEAM[XX]-LB      |
+| Name           | SG-DEVOPSTEAM18-LB        |
 | Inbound Rules  | Application Load Balancer |
 | Outbound Rules | Refer to the infra schema |
 
@@ -87,7 +87,7 @@ aws ec2 authorize-security-group-ingress \
 | Key                   | Value                                |
 | :-------------------- | :----------------------------------- |
 | Target type           | Instances                            |
-| Name                  | TG-DEVOPSTEAM[XX]                    |
+| Name                  | TG-DEVOPSTEAM18                      |
 | Protocol and port     | Refer to the infra schema            |
 | Ip Address type       | IPv4                                 |
 | VPC                   | Refer to the infra schema            |
@@ -162,7 +162,7 @@ aws elbv2 create-target-group \
 | Key                         | Value                                    |
 | :-------------------------- | :--------------------------------------- |
 | Type                        | Application Load Balancer                |
-| Name                        | ELB-DEVOPSTEAM99                         |
+| Name                        | ELB-DEVOPSTEAM18                         |
 | Scheme                      | Internal                                 |
 | Ip Address type             | IPv4                                     |
 | VPC                         | Refer to the infra schema                |
@@ -239,9 +239,10 @@ aws elbv2 describe-load-balancers \
 "internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com"
 ```
 
-Register the Target Group for the two instances
+* Register the target group for the two Drupal instances
 
 \[INPUT\]
+
 ```bash
 aws elbv2 register-targets \
     --target-group-arn arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152 \
@@ -250,9 +251,10 @@ aws elbv2 register-targets \
 
 No output from this command.
 
-We now need to create a listener to forward HTTP traffic from the load balancer to the target group
+* Create a listener on the load balancer to forward to the target group
 
 \[INPUT\]
+
 ```bash
 aws elbv2 create-listener \
     --load-balancer-arn arn:aws:elasticloadbalancing:eu-west-3:709024702237:loadbalancer/app/ELB-DEVOPSTEAM18/f62cf8f19f5a69ea \
@@ -262,6 +264,7 @@ aws elbv2 create-listener \
 ```
 
 \[OUTPUT\]
+
 ```json
 {
     "Listeners": [
@@ -298,6 +301,7 @@ No output from this command.
 from the SG-DEVOPSTEAM18-LB security group.
 
 \[INPUT\]
+
 ```bash
 aws ec2 authorize-security-group-ingress \
     --group-id sg-060333a9f2656e446 \
@@ -350,6 +354,8 @@ private teams channel
 
 * Update your string connection to test your ELB and test it
 
+\[INPUT\]
+
 ```bash
 // Updated connection string
 ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
@@ -381,9 +387,13 @@ curl localhost:8080
   an IP address using the `nslookup` command (works on Linux, macOS and Windows). Write
   the DNS name and the resolved IP Address(es) into the report.
 
+\[INPUT\]
+
 ```bash
 nslookup internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com
 ```
+
+\[OUTPUT\]
 
 ```bash
 Server:         172.26.32.1
@@ -400,22 +410,41 @@ Address: 10.0.18.138
 
 Help : execute `tcpdump port 8080`
 
+Two SSH tunnels need to be created to reach the Drupal instance from SSH as the load balancer does not redirect SSH traffic
+
+\[INPUT\]
+
 ```bash
 ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
 -L 1337:10.0.18.10:22 \
 -L 8080:internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com:8080
 ```
 
+And in another terminal, connect to one of the Drupal instances.
+
 ```bash
-16:50:08.458643 IP 10.0.18.138.32220 > 10.0.18.10.http-alt: Flags [P.], seq 1:131, ack 1, win 106, options [nop,nop,TS val 3394543151 ecr 2289361074], length 130: HTTP: GET / HTTP/1.1
-16:50:08.468892 IP 10.0.18.10.http-alt > 10.0.18.138.32220: Flags [P.], seq 1:5622, ack 131, win 489, options [nop,nop,TS val 2289361086 ecr 3394543151], length 5621: HTTP: HTTP/1.1 200 OK
+ssh bitnami@localhost -p 1337 -i ~/.ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
+
+tcpdump port 8080
 ```
 
-From this output we can identify the IP from which requests are sent by the load balancer : 10.0.18.138
+\[OUTPUT\]
+
+```bash
+...
+16:50:08.458643 IP 10.0.18.138.32220 > 10.0.18.10.http-alt: Flags [P.], seq 1:131, ack 1, win 106, options [nop,nop,TS val 3394543151 ecr 2289361074], length 130: HTTP: GET / HTTP/1.1
+16:50:08.468892 IP 10.0.18.10.http-alt > 10.0.18.138.32220: Flags [P.], seq 1:5622, ack 131, win 489, options [nop,nop,TS val 2289361086 ecr 3394543151], length 5621: HTTP: HTTP/1.1 200 OK
+...
+```
+
+From this output we can identify the IP from which requests are sent by the load balancer : 10.0.18.138 which matches the second resolved address by nslookup
 
 * In the Apache access log identify the health check accesses from the
   load balancer and copy some samples into the report.
 
+\[INPUT\]
+
+The following command must be executed while connected to one of the Drupal instances.
 
 ```bash
 cat /opt/bitnami/apache/logs/access_log
@@ -426,4 +455,4 @@ cat /opt/bitnami/apache/logs/access_log
 10.0.18.5 - - [21/Mar/2024:16:51:15 +0000] "GET / HTTP/1.1" 200 5147
 ```
 
-This is an example of the lines present in the access_log file on one of the bitnami instance
+This is an example of the lines present in the access_log file.
