@@ -45,7 +45,7 @@ aws ec2 create-security-group \
 ```bash
 aws ec2 authorize-security-group-ingress \
     --group-id sg-0d7bbbdb111abe4b4 \
-    --ip-permissions IpProtocol=tcp,FromPort=8080,ToPort=8080,IpRanges='[{CidrIp=10.0.0.0/28, Description="Allow HTTP from DMZ"}]' \
+    --ip-permissions IpProtocol=tcp,FromPort=8080,ToPort=8080,IpRanges='[{CidrIp=10.0.0.0/16, Description="Allow HTTP from DMZ"}]' \
     --tag-specifications 'ResourceType=security-group-rule,Tags=[{Key=Name,Value=HTTP-ALLOW}, {Key=Description, Value=Allow HTTP from DMZ}]'
 ```
 
@@ -63,7 +63,7 @@ aws ec2 authorize-security-group-ingress \
             "IpProtocol": "tcp",
             "FromPort": 8080,
             "ToPort": 8080,
-            "CidrIpv4": "10.0.0.0/28",
+            "CidrIpv4": "10.0.0.0/16",
             "Description": "Allow HTTP from DMZ",
             "Tags": [
                 {
@@ -340,7 +340,7 @@ aws ec2 revoke-security-group-ingress \
     --group-id sg-060333a9f2656e446 \
     --protocol tcp \
     --port 8080 \
-    --cidr 10.0.0.0/28
+    --cidr 10.0.0.0/16
 ```
 
 * Get the ELB deployment status
