@@ -406,6 +406,8 @@ Name:   internal-ELB-DEVOPSTEAM18-1198556003.eu-west-3.elb.amazonaws.com
 Address: 10.0.18.138
 ```
 
+Two adresses come out, meaning that there are two load balancers instead of the single one we could have thought.
+
 * From your Drupal instance, identify the ip from which requests are sent by the Load Balancer.
 
 Help : execute `tcpdump port 8080`
@@ -425,7 +427,7 @@ And in another terminal, connect to one of the Drupal instances.
 ```bash
 ssh bitnami@localhost -p 1337 -i ~/.ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
 
-tcpdump port 8080
+sudo tcpdump port 8080
 ```
 
 \[OUTPUT\]
@@ -437,7 +439,7 @@ tcpdump port 8080
 ...
 ```
 
-From this output we can identify the IP from which requests are sent by the load balancer : 10.0.18.138 which matches the second resolved address by nslookup
+From this output we can identify the IP from which requests are sent by the load balancer : 10.0.18.138 which matches the second resolved address by nslookup. Only one instance of the load balancer handles one request after all, no need to duplicate that request.
 
 * In the Apache access log identify the health check accesses from the
   load balancer and copy some samples into the report.
@@ -455,4 +457,4 @@ cat /opt/bitnami/apache/logs/access_log
 10.0.18.5 - - [21/Mar/2024:16:51:15 +0000] "GET / HTTP/1.1" 200 5147
 ```
 
-This is an example of the lines present in the access_log file.
+This is an example of the lines present in the access_log file. Several exact ones are repeated. We can see that the two IPs of the load balancers are querying the drupal instance. To ensure for each load balancer that they can connect with each instance.
