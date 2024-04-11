@@ -137,11 +137,17 @@ The first instance is launched automatically.
 
 Test ssh and web access.
 
+\[INPUT\]
 ```
-[INPUT]
-//ssh login
+ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
+                            -L 1337:10.0.18.10:22 \
+                            -L 8080:10.0.18.10:80
+ssh bitnami@localhost -p 1337 -i .ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
+```
 
-[OUTPUT]
+\[OUTPUT\]
+```
+
 ```
 
 ```
