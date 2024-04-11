@@ -18,7 +18,7 @@
 
 |Key|Value|
 |:--|:--|
-|Name|LT-DEVOPSTEAM[XX]|
+|Name|LT-DEVOPSTEAM18|
 |Version|v1.0.0|
 |Tag|Name->same as template's name|
 |AMI|Your Drupal AMI|
@@ -30,11 +30,24 @@
 |Advanced Details/EC2 Detailed Cloud Watch|enable|
 |Purchase option/Request Spot instance|disable|
 
+\[INPUT\]
+```bash
+create-launch-configuration \
+--launch-configuration-name LT-DEVOPSTEAM18 \
+--version "v1.0.0" \
+--
+--image-id <ami-id> \
+--instance-type t3.micro \
+--
+--security-groups <sg-id> \
+--
+--
+--
+--
 ```
-[INPUT]
-//cli command
 
-[OUTPUT]
+\[OUTPUT\]
+```bash
 ```
 
 ## Create an auto scaling group
