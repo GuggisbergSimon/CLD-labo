@@ -16,68 +16,99 @@
 
 ## Create a new launch configuration. 
 
-|Key|Value|
-|:--|:--|
-|Name|LT-DEVOPSTEAM18|
-|Version|v1.0.0|
-|Tag|Name->same as template's name|
-|AMI|Your Drupal AMI|
-|Instance type|t3.micro (as usual)|
-|Subnet|Your subnet A|
-|Security groups|Your Drupal Security Group|
-|IP Address assignation|Do not assign|
-|Storage|Only 10 Go Storage (based on your AMI)|
-|Advanced Details/EC2 Detailed Cloud Watch|enable|
-|Purchase option/Request Spot instance|disable|
+| Key                                       | Value                                  |
+| :---------------------------------------- | :------------------------------------- |
+| Name                                      | LT-DEVOPSTEAM18                        |
+| Version                                   | v1.0.0                                 |
+| Tag                                       | Name->same as template's name          |
+| AMI                                       | Your Drupal AMI                        |
+| Instance type                             | t3.micro (as usual)                    |
+| Subnet                                    | Your subnet A                          |
+| Security groups                           | Your Drupal Security Group             |
+| IP Address assignation                    | Do not assign                          |
+| Storage                                   | Only 10 Go Storage (based on your AMI) |
+| Advanced Details/EC2 Detailed Cloud Watch | enable                                 |
+| Purchase option/Request Spot instance     | disable                                |
 
 \[INPUT\]
+
 ```bash
-create-launch-configuration \
+aws autoscaling create-launch-configuration \
 --launch-configuration-name LT-DEVOPSTEAM18 \
---version "v1.0.0" \
---
---image-id <ami-id> \
+--image-id ami-0cbfa1ad3da51e348 \
 --instance-type t3.micro \
---
---security-groups <sg-id> \
---
---
---
---
+--security-groups sg-060333a9f2656e446 \
+--no-associate-public-ip-address \
+--block-device-mappings "[{\"DeviceName\":\"/dev/xvda\",\"Ebs\":{\"VolumeSize\":10}}]" \
+--instance-monitoring Enabled=true
 ```
 
+**Note**: CLIv2 is missing subnet and spot-instance parameters.
+
 \[OUTPUT\]
-```bash
+
+**Note**: the command did not output anything. The `aws autoscaling describe-launch-configurations` 
+command outputs the following information:
+
+```json
+{
+    "LaunchConfigurationName": "LT-DEVOPSTEAM18",
+    "LaunchConfigurationARN": "arn:aws:autoscaling:eu-west-3:709024702237:launchConfiguration:f85f1$
+    "ImageId": "ami-0cbfa1ad3da51e348",
+    "KeyName": "",
+    "SecurityGroups": [
+        "sg-060333a9f2656e446"
+    ],
+    "ClassicLinkVPCSecurityGroups": [],
+    "UserData": "",
+    "InstanceType": "t3.micro",
+    "KernelId": "",
+    "RamdiskId": "",
+    "BlockDeviceMappings": [
+        {
+            "DeviceName": "/dev/xvda",
+            "Ebs": {
+                "VolumeSize": 10
+            }
+        }
+    ],
+    "InstanceMonitoring": {
+        "Enabled": true
+    },
+    "CreatedTime": "2024-04-11T14:12:45.344000+00:00",
+    "EbsOptimized": false,
+    "AssociatePublicIpAddress": false
+}
 ```
 
 ## Create an auto scaling group
 
 * Choose launch template or configuration
 
-|Specifications|Key|Value|
-|:--|:--|:--|
-|Launch Configuration|Name|ASGRP_DEVOPSTEAM[XX]|
-||Launch configuration|Your launch configuration|
-|Instance launch option|VPC|Refer to infra schema|
-||AZ and subnet|AZs and subnets a + b|
-|Advanced options|Attach to an existing LB|Your ELB|
-||Target group|Your target group|
-|Health check|Load balancing health check|Turn on|
-||health check grace period|10 seconds|
-|Additional settings|Group metrics collection within Cloud Watch|Enable|
-||Health check grace period|10 seconds|
-|Group size and scaling option|Desired capacity|1|
-||Min desired capacity|1|
-||Max desired capacity|4|
-||Policies|Target tracking scaling policy|
-||Target tracking scaling policy Name|TTP_DEVOPSTEAM[XX]|
-||Metric type|Average CPU utilization|
-||Target value|50|
-||Instance warmup|30 seconds|
-||Instance maintenance policy|None|
-||Instance scale-in protection|None|
-||Notification|None|
-|Add tag to instance|Name|AUTO_EC2_PRIVATE_DRUPAL_DEVOPSTEAM[XX]|
+| Specifications                | Key                                         | Value                                  |
+| :---------------------------- | :------------------------------------------ |:------------------------------------- |
+| Launch Configuration          | Name                                        | ASGRP_DEVOPSTEAM18                   |
+|                               | Launch configuration                        | Your launch configuration              |
+| Instance launch option        | VPC                                         | Refer to infra schema                  |
+|                               | AZ and subnet                               | AZs and subnets a + b                  |
+| Advanced options              | Attach to an existing LB                    | Your ELB                               |
+|                               | Target group                                | Your target group                      |
+| Health check                  | Load balancing health check                 | Turn on                                |
+|                               | health check grace period                   | 10 seconds                             |
+| Additional settings           | Group metrics collection within Cloud Watch | Enable                                 |
+|                               | Health check grace period                   | 10 seconds                             |
+| Group size and scaling option | Desired capacity                            | 1                                      |
+|                               | Min desired capacity                        | 1                                      |
+|                               | Max desired capacity                        | 4                                      |
+|                               | Policies                                    | Target tracking scaling policy         |
+|                               | Target tracking scaling policy Name         | TTP_DEVOPSTEAM[XX]                     |
+|                               | Metric type                                 | Average CPU utilization                |
+|                               | Target value                                | 50                                     |
+|                               | Instance warmup                             | 30 seconds                             |
+|                               | Instance maintenance policy                 | None                                   |
+|                               | Instance scale-in protection                | None                                   |
+|                               | Notification                                | None                                   |
+| Add tag to instance           | Name                                        | AUTO_EC2_PRIVATE_DRUPAL_DEVOPSTEAM[XX] |
 
 ```
 [INPUT]
