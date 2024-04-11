@@ -86,8 +86,8 @@ command outputs the following information:
 * Choose launch template or configuration
 
 | Specifications                | Key                                         | Value                                  |
-| :---------------------------- | :------------------------------------------ |:------------------------------------- |
-| Launch Configuration          | Name                                        | ASGRP_DEVOPSTEAM18                   |
+| :---------------------------- | :------------------------------------------ |:-------------------------------------- |
+| Launch Configuration          | Name                                        | ASGRP_DEVOPSTEAM18                     |
 |                               | Launch configuration                        | Your launch configuration              |
 | Instance launch option        | VPC                                         | Refer to infra schema                  |
 |                               | AZ and subnet                               | AZs and subnets a + b                  |
@@ -101,21 +101,35 @@ command outputs the following information:
 |                               | Min desired capacity                        | 1                                      |
 |                               | Max desired capacity                        | 4                                      |
 |                               | Policies                                    | Target tracking scaling policy         |
-|                               | Target tracking scaling policy Name         | TTP_DEVOPSTEAM[XX]                     |
+|                               | Target tracking scaling policy Name         | TTP_DEVOPSTEAM18                       |
 |                               | Metric type                                 | Average CPU utilization                |
 |                               | Target value                                | 50                                     |
 |                               | Instance warmup                             | 30 seconds                             |
 |                               | Instance maintenance policy                 | None                                   |
 |                               | Instance scale-in protection                | None                                   |
 |                               | Notification                                | None                                   |
-| Add tag to instance           | Name                                        | AUTO_EC2_PRIVATE_DRUPAL_DEVOPSTEAM[XX] |
+| Add tag to instance           | Name                                        | AUTO_EC2_PRIVATE_DRUPAL_DEVOPSTEAM18   |
+
+\[INPUT\]
+```bash
+aws autoscaling create-auto-scaling-group \
+--auto-scaling-group-name ASGRP_DEVOPSTEAM18 \
+--launch-configuration-name LT-DEVOPSTEAM18 \
+--min-size 1 \
+--max-size 4 \
+
+aws autoscaling put-scaling-policy
+--auto-scaling-group-name ASGRP_DEVOPSTEAM18
+--policy-name TTP_DEVOPSTEAM18
+--policy-type TargetTrackingScaling
+--target-tracking-configuration {"TargetValue": 50.0}
 
 ```
-[INPUT]
-//cli command
 
-[OUTPUT]
+\[OUTPUT\]
+```bash
 ```
+
 
 * Result expected
 
