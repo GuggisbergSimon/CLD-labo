@@ -53,7 +53,7 @@ command outputs the following information:
 ```json
 {
     "LaunchConfigurationName": "LT-DEVOPSTEAM18",
-    "LaunchConfigurationARN": "arn:aws:autoscaling:eu-west-3:709024702237:launchConfiguration:f85f1$
+    "LaunchConfigurationARN": "arn:aws:autoscaling:eu-west-3:709024702237:launchConfiguration:f85f1c1f-168d-4f3e-99f0-358103081550:launchConfigurationName/LT-DEVOPSTEAM18",
     "ImageId": "ami-0cbfa1ad3da51e348",
     "KeyName": "",
     "SecurityGroups": [
