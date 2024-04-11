@@ -111,39 +111,62 @@ command outputs the following information:
 | Add tag to instance           | Name                                        | AUTO_EC2_PRIVATE_DRUPAL_DEVOPSTEAM18   |
 
 \[INPUT\]
+
+NOTE : For unknown reasons the first command below failed. It has been done through the GUI.
+
 ```bash
 aws autoscaling create-auto-scaling-group \
 --auto-scaling-group-name ASGRP_DEVOPSTEAM18 \
 --launch-configuration-name LT-DEVOPSTEAM18 \
+--vpc-zone-identifier subnet-04a2fc4d8de790824,subnet-0bd3b8cdf25b8042e \
+--traffic-sources Identifier=arn:aws:elasticloadbalancing:eu-west-3:709024702237:loadbalancer/app/ELB-DEVOPSTEAM18/3e4bba27bd1aeeff,Type=elbv2 \
+--target-group-arns arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM18/99ff61700d72e152 \
+--health-check-type ELB \
+--health-check-grace-period 10 \
+--desired-capacity 1 \
 --min-size 1 \
 --max-size 4 \
-
-aws autoscaling put-scaling-policy
---auto-scaling-group-name ASGRP_DEVOPSTEAM18
---policy-name TTP_DEVOPSTEAM18
---policy-type TargetTrackingScaling
---target-tracking-configuration {"TargetValue": 50.0}
-
+--default-instance-warmup 30 \
+--instance-maintenance-policy '{"MinHealthyPercentage": -1, "MaxHealthyPercentage": -1}' \
+--no-new-instances-protected-from-scale-in
 ```
 
 \[OUTPUT\]
 ```bash
 ```
 
+Creation of the autoscaling policy
+
+\[INPUT\]
+```bash
+aws autoscaling put-scaling-policy
+--auto-scaling-group-name ASGRP_DEVOPSTEAM18
+--policy-name TTP_DEVOPSTEAM18
+--policy-type TargetTrackingScaling
+--target-tracking-configuration '{"TargetValue": 50.0, "PredefinedMetricSpecification": {"PredefinedMetricType": "ASGAverageCPUUtilization"}}'
+```
+
+\[OUTPUT\]
+```bash
+```
 
 * Result expected
 
-The first instance is launched automatically.
+The first instance is launched automatically with the IP 10.0.18.132
 
 Test ssh and web access.
 
 \[INPUT\]
 ```
 ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
-                            -L 1337:10.0.18.10:22 \
-                            -L 8080:10.0.18.10:80
+                            -L 1337:10.0.18.132:22 \
+                            -L 8080:10.0.18.132:8080
 ssh bitnami@localhost -p 1337 -i .ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
 ```
+
+It is possible to access through ssh
+
+NOTE : http access failed
 
 \[OUTPUT\]
 ```

@@ -11,6 +11,14 @@
 
 * Check how many vCPU are available (with htop command)
 
+NOTE : Those commands failed as the instance didn't seem to be connected to internet
+
+```bash
+sudo apt-get update
+sudo apt-get install stress
+sudo apt-get install htop
+```
+
 ```
 [INPUT]
 htop
