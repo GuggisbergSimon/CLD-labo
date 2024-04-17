@@ -14,6 +14,8 @@
 * 1 RDS Database instance - started
 * 1 Elastic Load Balancer - started
 
+NOTE : the following labo has been done through the GUI, but we've composed the commands for the first part.
+
 ## Create a new launch configuration. 
 
 | Key                                       | Value                                  |
@@ -112,8 +114,6 @@ command outputs the following information:
 
 \[INPUT\]
 
-NOTE : For unknown reasons the first command below failed. It has been done through the GUI.
-
 ```bash
 aws autoscaling create-auto-scaling-group \
 --auto-scaling-group-name ASGRP_DEVOPSTEAM18 \
@@ -152,9 +152,8 @@ aws autoscaling put-scaling-policy
 
 * Result expected
 
-The first instance is launched automatically with the IP 10.0.18.132
-
-Test ssh and web access.
+The first instance is launched automatically an IP that needs to be retrieved. 
+here : 10.0.18.132
 
 \[INPUT\]
 ```
@@ -164,15 +163,6 @@ ssh devopsteam18@15.188.43.46 -i ~/.ssh/CLD_KEY_DMZ_DEVOPSTEAM18.pem -Nv \
 ssh bitnami@localhost -p 1337 -i .ssh/CLD_KEY_DRUPAL_DEVOPSTEAM18.pem
 ```
 
-It is possible to access through ssh
+both ssh and http access work
 
-NOTE : http access failed
-
-\[OUTPUT\]
-```
-
-```
-
-```
-//screen shot, web access (login)
-```
+![alt text](img/001-login.png)
