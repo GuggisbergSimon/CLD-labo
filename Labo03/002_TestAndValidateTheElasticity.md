@@ -11,81 +11,97 @@
 
 * Check how many vCPU are available (with htop command)
 
-NOTE : Those commands failed as the instance didn't seem to be connected to internet
+```bash
+sudo apt-get update && sudo apt-get -y install stress htop
+```
+
+\[INPUT\]
 
 ```bash
-sudo apt-get update
-sudo apt-get install stress
-sudo apt-get install htop
-```
-
-```
-[INPUT]
 htop
+```
 
-[OUTPUT]
-//copy the part representing vCPus, RAM and swap usage
+\[OUTPUT\]
+
+```bash
+    0[                                                        0.0%]   Tasks: 30, 410 thr; 1 running
+    1[|                                                       0.7%]   Load average: 0.01 0.01 0.00 
+  Mem[|||||||||||||||||||||||||||||||||||||||||||||||||||270M/951M]   Uptime: 01:56:51
+  Swp[|                                                 3.00M/635M]
 ```
 
 ### Stress your instance
 
+\[INPUT\]
+
+```bash
+stress --cpu 2
 ```
-[INPUT]
-//stress command
 
 [OUTPUT]
-//copy the part representing vCPus, RAM and swap usage
-//tip : use two ssh sessions....
+
+```bash
+    0[|||||||||||||||||||||||||||||||||100.0%]   Tasks: 33, 410 thr; 2 running
+    1[|||||||||||||||||||||||||||||||||100.0%]   Load average: 0.16 0.03 0.01 
+  Mem[||||||||||||||||||||||||||||||273M/951M]   Uptime: 02:46:27
+  Swp[|                            1.75M/635M]
+
+    PID USER      PRI  NI  VIRT   RES   SHR S CPU%▽MEM%   TIME+  Command
+   2713 bitnami    20   0  3684    96     0 R 100.  0.0  0:09.40 stress --cpu 2
 ```
 
 * (Scale-IN) Observe the autoscaling effect on your infa
-
 
 ```
 [INPUT]
 //Screen shot from cloud watch metric
 ```
-[Sample](./img/CLD_AWS_CLOUDWATCH_CPU_METRICS.PNG)
+![](./img/002-cloud-watch-cpu.png)
 
 ```
 //TODO screenshot of ec2 instances list (running state)
 ```
-[Sample](./img/CLD_AWS_EC2_LIST.PNG)
+![](./img/003-instances.png)
 
-```
-//TODO Validate that the various instances have been distributed between the two available az.
-[INPUT]
-//aws cli command
+\[INPUT\]
 
-[OUTPUT]
+```bash
+// Query instances belonging to the autoscaling group ASGRP_DEVOPSTEAM18
+aws ec2 describe-instances --filters "Name=tag:aws:autoscaling:groupName,Values=ASGRP_DEVOPSTEAM18" --query "Reservations[*].Instances[*].{Instance:InstanceId,AZ:Placement.AvailabilityZone}" --output table
 ```
 
+\[OUTPUT\]
+```bash
+---------------------------------------
+|          DescribeInstances          |
++-------------+-----------------------+
+|     AZ      |       Instance        |
++-------------+-----------------------+
+|  eu-west-3a |  i-03e3e9220f5ecbf4d  |
+|  eu-west-3a |  i-0f5eaeae79a19fab9  |
+|  eu-west-3b |  i-04138abde0b1a1d4a  |
+|  eu-west-3b |  i-0336776466e4ecd61  |
++-------------+-----------------------+
 ```
-//TODO screenshot of the activity history
-```
-[Sample](./img/CLD_AWS_ASG_ACTIVITY_HISTORY.PNG)
 
-```
-//TODO screenshot of the cloud watch alarm target tracking
-```
-[Sample](./img/CLD_AWS_CLOUDWATCH_ALARMHIGH_STATS.PNG)
+**Activity history**
+![](./img/004-asg-activity-history.png)
 
+**Alarm high statistics**
+![](./img/005-alarmhigh-stats.png)
 
 * (Scale-OUT) As soon as all 4 instances have started, end stress on the main machine.
 
 [Change the default cooldown period](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-scaling-cooldowns.html)
 
-```
-//TODO screenshot from cloud watch metric
-```
+** CloudWatch CPU metrics after cooldown**
+![](./img/006-cloud-watch-cpu-2.png)
 
-```
-//TODO screenshot of ec2 instances list (terminated state)
-```
+** EC2 instances list after cooldown**
+![](./img/007-instances-terminated.png
 
-```
-//TODO screenshot of the activity history
-```
+** Activity history after cooldown**
+![](./img/008-asg-activity-history-2.png)
 
 ## Release Cloud resources
 
