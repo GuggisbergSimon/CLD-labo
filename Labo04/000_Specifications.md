@@ -25,7 +25,7 @@ Prerequisites:
 
 - Google account with Google Cloud Platform enabled
 
-* [Link to validate your email address](https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgcp.secure.force.com%2FGCPEDU%3Fvid%3DaGU4M000000HQUa&data=05%7C02%7Cnicolas.glassey%40heig-vd.ch%7C3b5d4f9c421e43b710f708dc379e44c8%7Ca372f724c0b24ea0abfb0eb8c6f84e40%7C0%7C0%7C638446400101091107%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=5G088eCjE3RC03H3fzpa0e9n0pRBlAw%2FM5pY51P6MMQ%3D&reserved=0)
+* [Link to validate your email address](https://vector.my.salesforce-sites.com/GCPEDU?cid=nt%2BKg7%2BOxiPqnxEc81A3QkGMs8mef6iM6wJZ%2FlKto5c%2FI9Pno%2FtGgIVKKphGicwh/)
 
 
 ## Task 0 Set up the development environment on your machine
