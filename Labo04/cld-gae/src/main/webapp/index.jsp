@@ -4,10 +4,10 @@
 <html>
 <head>
   <link href='//fonts.googleapis.com/css?family=Marmelad' rel='stylesheet' type='text/css'>
-  <title>Hello App Engine Standard Java 11</title>
+  <title>Hello App Engine Standard Java 8</title>
 </head>
 <body>
-    <h1>Hello App Engine -- Java 11!</h1>
+    <h1>Hello App Engine -- Java 8!</h1>
 
   <p>This is <%= HelloAppEngine.getInfo() %>.</p>
   <table>
@@ -16,7 +16,6 @@
     </tr>
     <tr>
       <td><a href='/hello'>Hello App Engine</a></td>
-      <td><a href='/datastorewrite'>Data Store Write</a></td>
     </tr>
   </table>
 
