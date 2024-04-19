@@ -37,7 +37,7 @@ Create a simple web application as follows.
       generate. IntelliJ detect the framework, you must click on
       **auto import** and accept the configuration of the detected
       frameworks.
-
+l
 3. In the `pom.xml` file add
    ```
    <appengine.sdk.version>1.9.79</appengine.sdk.version>  !!! May day
@@ -59,6 +59,13 @@ Create a simple web application as follows.
    folder that contains the Java source code. Open the
    `HelloAppEngine` file. What does the code do?
 
+```txt
+The code is a simple servlet that answers to HTTP GET requests
+on the `/hello` endpoint by sending back a plain text message
+containing information about the host including Java version,
+OS and user name.
+```
+
 6. Note the annotation starting with `@WebServlet` in front of the
    Servlet. It maps the route `hello` to the Servlet. The mappings are
    needed by the web application server to route the incoming HTTP
@@ -67,9 +74,23 @@ Create a simple web application as follows.
 7. In the `webapp/WEB-INF` directory, you have a file called
    `web.xml`. What information does it contain? And what is its use ?
 
+```txt
+The `web.xml` file is the deployment descriptor for the web app.
+It contains the servlet mapping for the `HelloAppEngine` servlet
+and the welcome file list. The welcome file list is the list of
+files that the server will serve when the client requests the
+root of the web app.
+```
+
 8. Inspect the Google App Engine configuration file
    `appengine-web.xml` in `webapp/WEB-INF`. What information does it
    contain?
+
+```txt
+The `appengine-web.xml` file contains information about the
+Google App Engine configuration such as Java runtime version,
+thread safety settings and logging configuration file location.
+```
 
 9. Edit the Google App Engine configuration file as follows:
 
@@ -78,6 +99,13 @@ Create a simple web application as follows.
 
 10. In the `webapp` directory you have also the file called
     `index.jsp` spotted in `web.xml`. What is its use ?
+
+```txt
+The `index.jsp` file is the default file that the server will serve
+when the client requests the root of the web app. It is a JSP file
+(Jakarta Server Pages) that can contain HTML and Java code. It is
+analogous to a template file in PHP/JS.
+```
 
 ---
 
