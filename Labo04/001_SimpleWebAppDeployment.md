@@ -17,8 +17,7 @@ Create a simple web application as follows.
 
     * Add an Archtype
 
-        - **GroupId:** com.google.appengine.archetypes -- not
-          displayed ???
+        - **GroupId:** com.google.appengine.archetypes
         - **ArtifactId:** appengine-standard-archetype
         - **Version:** 1.0.2
 
@@ -59,13 +58,6 @@ l
    folder that contains the Java source code. Open the
    `HelloAppEngine` file. What does the code do?
 
-```txt
-The code is a simple servlet that answers to HTTP GET requests
-on the `/hello` endpoint by sending back a plain text message
-containing information about the host including Java version,
-OS and user name.
-```
-
 6. Note the annotation starting with `@WebServlet` in front of the
    Servlet. It maps the route `hello` to the Servlet. The mappings are
    needed by the web application server to route the incoming HTTP
@@ -74,23 +66,9 @@ OS and user name.
 7. In the `webapp/WEB-INF` directory, you have a file called
    `web.xml`. What information does it contain? And what is its use ?
 
-```txt
-The `web.xml` file is the deployment descriptor for the web app.
-It contains the servlet mapping for the `HelloAppEngine` servlet
-and the welcome file list. The welcome file list is the list of
-files that the server will serve when the client requests the
-root of the web app.
-```
-
 8. Inspect the Google App Engine configuration file
    `appengine-web.xml` in `webapp/WEB-INF`. What information does it
    contain?
-
-```txt
-The `appengine-web.xml` file contains information about the
-Google App Engine configuration such as Java runtime version,
-thread safety settings and logging configuration file location.
-```
 
 9. Edit the Google App Engine configuration file as follows:
 
@@ -99,13 +77,6 @@ thread safety settings and logging configuration file location.
 
 10. In the `webapp` directory you have also the file called
     `index.jsp` spotted in `web.xml`. What is its use ?
-
-```txt
-The `index.jsp` file is the default file that the server will serve
-when the client requests the root of the web app. It is a JSP file
-(Jakarta Server Pages) that can contain HTML and Java code. It is
-analogous to a template file in PHP/JS.
-```
 
 ---
 
@@ -214,28 +185,40 @@ Deliverables:
   you see in the **Java class files**, **web.xml**,
   **appengine-web.xml** and **index.jsp** files in a few sentences.
 
-```
+
+
+```txt
 Java class files
 
-It represents a basic servlet.
-It has a method to answer for GET requests (doGet) and another retrieving information about current Java version (java 11 in our case).
+The code is a simple servlet that answers to HTTP GET requests
+on the `/hello` endpoint by sending back a plain text message
+containing information about the host including Java version,
+OS and user name.
 ```
 
-```
+```txt
 web.xml
 
-Defines a single welcome file for the root of our application.
-Here the index.jsp file is the html used by the web page.
-It specifies the version of the deployment descriptor
+This file is the deployment descriptor for the web app.
+It contains the servlet mapping for the `HelloAppEngine` servlet
+and the welcome file list. The welcome file list is the list of
+files that the server will serve when the client requests the
+root of the web app.
 ```
 
-```
+```txt
 appengine-web.xml
-It contains the settings for the runtime environment, here java 11.
-Whether it is thradsafe, ie if it handles concurrent requests, the namespace for our app and the log file location.
+
+This file contains information about the Google App Engine configuration 
+such as Java runtime version, thread safety settings and logging 
+configuration file location.
 ```
 
-```
+```txt
 index.jsp
-It is the file used to build the html page. Some fields are to be filled dynamically.
+
+The `index.jsp` file is the default file that the server will serve
+when the client requests the root of the web app. It is a JSP file
+(Jakarta Server Pages) that can contain HTML and Java code. It is
+analogous to a template file in PHP/JS.
 ```
