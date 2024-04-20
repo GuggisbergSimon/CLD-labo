@@ -156,14 +156,14 @@ l
 
 3. Deploy the web application to the cloud:
 
-       - Go to the upper right corner of the IDE. You have a list of
-         build destinations. Set the list to **Google App Engine
-         Deployment** Run the project with the play button on the right.
+    - Go to the upper right corner of the IDE. You have a list of
+      build destinations. Set the list to **Google App Engine
+      Deployment** Run the project with the play button on the right.
 
-         **Note**: You might need to grant `Storage Object Viewer` permission to your service account (the service account is _not_ your own account. It is a special account linked to your project used by Google. It can be found in the logs if you try to deploy for the first time. More information here <https://cloud.google.com/iam/docs/service-accounts>). To achieve this, go to **Cloud Storage** service and select the bucket that requires to set the permission. In the **Permission** tab, add a new permission where **New principals** is the service account for your project (given in the logs), and the role is `Storage Object Viewer`. Re-run your build configuration and the application should be deployed.
+      **Note**: You might need to grant `Storage Object Viewer` permission to your service account (the service account is _not_ your own account. It is a special account linked to your project used by Google. It can be found in the logs if you try to deploy for the first time. More information here <https://cloud.google.com/iam/docs/service-accounts>). To achieve this, go to **Cloud Storage** service and select the bucket that requires to set the permission. In the **Permission** tab, add a new permission where **New principals** is the service account for your project (given in the logs), and the role is `Storage Object Viewer`. Re-run your build configuration and the application should be deployed.
 
-       - Observe the messages of the deployment process in the **Run**
-         view, then the **Services** view. You should see a message like this Deployed service [default] to https://20200406t150557-dot-labgae.appspot.com]`. Click on the link to verify that it works.
+    - Observe the messages of the deployment process in the **Run**
+      view, then the **Services** view. You should see a message like this Deployed service [default] to https://20200406t150557-dot-labgae.appspot.com]`. Click on the link to verify that it works.
 
 ---
 
