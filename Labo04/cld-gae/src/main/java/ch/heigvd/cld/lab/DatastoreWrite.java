@@ -49,10 +49,7 @@ public class DatastoreWrite extends HttpServlet {
             parameterMap.remove("_key");
 
             // Convert the properties to a map.
-            final Map<String, String> properties = parameterMap
-                    .entrySet()
-                    .stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue()[0]));
+            final Map<String, String> properties = parameterMap.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue()[0]));
 
             // Save the entity to the datastore.
             if (createDatastoreEntity(keyKind, keyName, properties)) {
@@ -83,12 +80,13 @@ public class DatastoreWrite extends HttpServlet {
 
             final KeyFactory keyFactory = datastore.newKeyFactory().setKind(keyKind);
 
-            final Key key = (keyName == null || keyName.isEmpty()) ? (Key) keyFactory.newKey() : keyFactory.newKey(keyName);
-            final Entity.Builder entityBuilder = Entity.newBuilder(key);
+            // Create a new entity with the properties.
+            final IncompleteKey incompleteKey = (keyName == null || keyName.isEmpty()) ? keyFactory.newKey() : keyFactory.newKey(keyName);
+            final FullEntity.Builder<IncompleteKey> entityBuilder = FullEntity.newBuilder(incompleteKey);
 
             properties.forEach(entityBuilder::set);
 
-            final Entity entity = entityBuilder.build();
+            final FullEntity<IncompleteKey> entity = entityBuilder.build();
             final Entity createdEntity = datastore.put(entity);
 
             log("Created entity: " + createdEntity.toString());
