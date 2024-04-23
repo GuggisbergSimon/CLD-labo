@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Google App Engine Deployment" type="gcp-app-engine-deploy" factoryName="Google App Engine Deployment" server-name="Google App Engine">
+    <deployment type="maven-build-source" name="LabGAE" project="t-pulsar-420817" version="auto">
+      <settings cloudProjectName="t-pulsar-420817" deployAllConfigs="true" environment="APP_ENGINE_STANDARD" googleUsername="aubry.mangold@gmail.com" version="" />
+    </deployment>
+    <method v="2">
+      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="package" />
+    </method>
+  </configuration>
+</component>
