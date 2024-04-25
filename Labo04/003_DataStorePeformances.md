@@ -75,15 +75,18 @@ Deliverables:
   ```
   For the `hello` servlet, the response time varies between 50 ms and 450 ms. The average response time is around 200 ms.
 
-  For the `datastorewrite` servlet, the response time varies between 2000 ms and 28000 ms. The average response time is not inferable from the plot, but it is significantly higher than the `hello` servlet.
+  For the `datastorewrite` servlet, the response time varies between 100 ms and 200ms with a noticeable large spike at 1100 ms. The average response time is not inferable from the plot, but it is significantly higher than the `hello` servlet.
   ```
 
 - Compare the response times shown by vegeta with the App Engine
   console. Explain the difference.
 
-  ```
-  //TODO
-  ```
+![plot-appengine-datastore.png](deliverables/plot-appengine-datastore.png)
+
+```
+The App Engine displays as for 50 percentile (median) a value of ~29ms latency for the largest spike during the datastore attack while the 99 percentile is at ~700ms at the same time.
+This is noticeably smaller than vegeta times, as it registers only the time for the servlet to answer, not taking response time into account as vegeta does.
+```
 
 - How many resources have you used to run these tests? From the
   **Quota Details** view of the console determine the non-zero resource
@@ -93,29 +96,32 @@ Deliverables:
 ![quota-details.png](deliverables/quota-details.png)
 
 ```
-As we've run three sets of tests back to back those number are not representative of a single test, but rather 3.
+As we've run three sets of tests back to back those number are not representative of a single test, but rather the 3 of them.
 
-Cloud Firestore is a NoSQL DB that stores Google App Engine's data
-
-Cloud Firestore Read Operations : The number of reading operations
-Cloud Firestore API Calls : The number of API calls
-Cloud Firestore Stored Data : Data stored on Firestore 
-Data Sent to Cloud Firestore API : Data uploaded to Firestore
-Data Received from Cloud Firestore API : Data downloaded from Firestore
-Cloud Firestore Entity Fetch Ops : 
-Cloud Firestore Entity Writes : 
-Cloud Firestore Entity Deletes : The number of 
-Cloud Firestore Index Write Ops :
-Cloud Firestore Network Egress : Outbound traffic out of f 
-Cloud Storage Network (Egress) – Americas and EMEA :
+Cloud Firestore Read Operations : The total number of Read operations
+Cloud Firestore API Calls : The total number of API calls used for reading, writing data, deleting, querying documents, etc
+Cloud Firestore Stored Data : Total amount of data stored in datastore entities and corresponding indexes. It may incur significant overhead due to metadata fields required.
+Data Sent to Cloud Firestore API : Total amount of data sent by the application to the Cloud Firestore
+Data Received from Cloud Firestore API : Total amount of data received by the application from the Cloud Firestore as answers from the API calls (see above)
+Cloud Firestore Entity Fetch Ops : Number of read operations to fetch documents (entities) from Cloud Firestore. It is surprisingly slower, we may infer that a cache system is in place.
+Cloud Firestore Entity Writes : Number of write operations to update documents in Cloud Firestore.
+Cloud Firestore Entity Deletes : Number of delete operations to remove documents in Cloud Firestore. It is considerably low as well as its presence is due to manual operations done on the data.
+Cloud Firestore Index Write Ops : Number of write operations effected on Cloud Firestore indexes. Of note : every time an entity is updated (written) its index is updated.
+Cloud Firestore Network Egress : Total amount of outbound traffic of data from cloud firestore to the application/other services
+Cloud Storage Network (Egress) – Americas and EMEA : Total amount of data transferred out of cloud firestore to external networks, services, such as cloud storage.
 ```
 
 - Let's suppose you become suspicious that the algorithm for the automatic scaling of
   instances is not working correctly. Imagine a way in which the algorithm could be broken. Which measures shown in the console would you use to detect this failure?
 
-  ```
-  //TODO
-  ```
+```
+Inspecting conspicuous data would be a good way to detect it. 
+Setting up alarms or triggers to ensure things follow the plan is advised.
+- Instance count should vary in size, both growing and shrinking.
+- Request Latency should be kept under reasonable time.
+- CPU/RAM usage should be as optimised as possible, aiming to be as useful as needed without turning into a bottleneck.
+- Request count should be split evenly among instances to avoid overburdening one.
+```
 
 ## Troubleshooting
 
