@@ -51,7 +51,7 @@ Deliverables:
   ```bash
   # Setup
   OUT="./deliverables"
-  URL="https://20240422t201334-dot-t-pulsar-420817.ew.r.appspot.com"
+  URL="https://20240425t141424-dot-t-pulsar-420817.ew.r.appspot.com"
   DURATION="30s"
   RATE="25"
 
