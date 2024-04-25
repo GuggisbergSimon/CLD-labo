@@ -63,10 +63,6 @@ Deliverables:
   PARAMS="_kind=book&author=Ray%20J.%20Rafaels&title=Cloud%20Computing%3A%20From%20Beginning%20to%20End"
   echo "GET $URL/datastorewrite?$PARAMS" | vegeta attack -duration=$DURATION | tee result_datastorewrite.bin | vegeta plot > plot_datastorewrite.html
 
-  # Screenshot the plots
-  google-chrome --headless --screenshot="plot_hello.png" --window-size=1900,600 "file://$(pwd)/plot_hello.html"
-  google-chrome --headless --screenshot="plot_datastorewrite.png" --window-size=1900,600 "file://$(pwd)/plot_datastorewrite.html"
-
   popd
   ```
 
