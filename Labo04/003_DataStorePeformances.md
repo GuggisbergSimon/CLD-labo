@@ -92,12 +92,23 @@ Deliverables:
 
 ![quota-details.png](deliverables/quota-details.png)
 
-  ```
+```
 As we've run three sets of tests back to back those number are not representative of a single test, but rather 3.
-Cloud Firestore Read Operations : The number of read operations
+
+Cloud Firestore is a NoSQL DB that stores Google App Engine's data
+
+Cloud Firestore Read Operations : The number of reading operations
 Cloud Firestore API Calls : The number of API calls
-Cloud Firestore Stored Data : The Data 
-  ```
+Cloud Firestore Stored Data : Data stored on Firestore 
+Data Sent to Cloud Firestore API : Data uploaded to Firestore
+Data Received from Cloud Firestore API : Data downloaded from Firestore
+Cloud Firestore Entity Fetch Ops : 
+Cloud Firestore Entity Writes : 
+Cloud Firestore Entity Deletes : The number of 
+Cloud Firestore Index Write Ops :
+Cloud Firestore Network Egress : Outbound traffic out of f 
+Cloud Storage Network (Egress) – Americas and EMEA :
+```
 
 - Let's suppose you become suspicious that the algorithm for the automatic scaling of
   instances is not working correctly. Imagine a way in which the algorithm could be broken. Which measures shown in the console would you use to detect this failure?
