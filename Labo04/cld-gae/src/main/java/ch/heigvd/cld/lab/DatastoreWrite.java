@@ -2,7 +2,9 @@ package ch.heigvd.cld.lab;
 
 import com.google.cloud.datastore.*;
 
-import javax.json.JsonValue;
+
+import com.google.appengine.api.utils.SystemProperty;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -69,31 +71,14 @@ public class DatastoreWrite extends HttpServlet {
 
             // Write the response.
             if (createdEntity != null) {
-                // Return all entities of the kind that was written.
-                final List<Entity> entities = getAllEntities(keyKind);
-
-                // Build the JSON response.
-                JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-                for (Entity entity : entities) {
-                    JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-
-                    // Add the ID/name and kind to the JSON object.
-                    if (entity.getKey().getName() == null) {
-                        objectBuilder.add("_key", Json.createValue(entity.getKey().getId()));
-                    } else {
-                        objectBuilder.add("_key", entity.getKey().getName());
-                    }
-                    objectBuilder.add("_kind", entity.getKey().getKind());
-
-                    // Add the properties to the JSON object.
-                    for (String name : entity.getNames()) {
-                        objectBuilder.add(name, entity.getString(name));
-                    }
-
-                    arrayBuilder.add(objectBuilder);
+                if (SystemProperty.environment.value() != SystemProperty.Environment.Value.Production) {
+                    // Return all entities of the kind that was written.
+                    final String entities = getAllEntitiesAsJson(keyKind);
+                    response.getWriter().println(entities);
+                } else {
+                    pw.println("Entity written to the datastore");
                 }
 
-                response.getWriter().println(arrayBuilder.build().toString());
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 pw.println("Error: the entity could not be written to the datastore");
@@ -112,7 +97,7 @@ public class DatastoreWrite extends HttpServlet {
      * @param keyKind    The kind of the entity.
      * @param keyName    The key of the entity. If null, a new key will be generated.
      * @param properties The properties of the entity.
-     * @return True if the entity was created successfully, false otherwise.
+     * @return The created entity.
      */
     private Entity createDatastoreEntity(String keyKind, String keyName, Map<String, String> properties) {
         try {
@@ -143,7 +128,7 @@ public class DatastoreWrite extends HttpServlet {
      * @param kind The kind of the entities to retrieve.
      * @return A list of entities.
      */
-    public List<Entity> getAllEntities(String kind) {
+    public String getAllEntitiesAsJson(String kind) {
         Query<Entity> query = Query.newEntityQueryBuilder().setKind(kind).build();
         QueryResults<Entity> results = datastore.run(query);
 
@@ -152,6 +137,27 @@ public class DatastoreWrite extends HttpServlet {
             entities.add(results.next());
         }
 
-        return entities;
+        // Build the JSON response.
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        for (Entity entity : entities) {
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+
+            // Add the ID/name and kind to the JSON object.
+            if (entity.getKey().getName() == null) {
+                objectBuilder.add("_key", Json.createValue(entity.getKey().getId()));
+            } else {
+                objectBuilder.add("_key", entity.getKey().getName());
+            }
+            objectBuilder.add("_kind", entity.getKey().getKind());
+
+            // Add the properties to the JSON object.
+            for (String name : entity.getNames()) {
+                objectBuilder.add(name, entity.getString(name));
+            }
+
+            arrayBuilder.add(objectBuilder);
+        }
+
+        return arrayBuilder.build().toString();
     }
 }
