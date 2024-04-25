@@ -2,6 +2,7 @@ package ch.heigvd.cld.lab;
 
 import com.google.cloud.datastore.*;
 
+import javax.json.JsonValue;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 
 /**
  * A servlet that writes an entity to the Google Cloud Datastore for each request it receives.
@@ -45,7 +49,10 @@ public class DatastoreWrite extends HttpServlet {
             final String keyName = request.getParameter("_key");
 
             if (keyKind == null) {
-                pw.println("Error: missing required _kind parameter");
+                response.getWriter().println(Json.createObjectBuilder()
+                    .add("error", "missing required _kind parameter")
+                    .build()
+                    .toString());
                 return;
             }
 
@@ -60,18 +67,33 @@ public class DatastoreWrite extends HttpServlet {
             // Save the entity to the datastore.
             final Entity createdEntity = createDatastoreEntity(keyKind, keyName, properties);
 
+            // Write the response.
             if (createdEntity != null) {
-                pw.println("The entity has been written to the " + datastore.getOptions().getProjectId() + " datastore.");
-
                 // Return all entities of the kind that was written.
                 final List<Entity> entities = getAllEntities(keyKind);
-                pw.println("Entities of kind " + keyKind + ":");
-                entities.forEach(e -> pw.println(e.toString()));
 
-                // Return the created entity.
-                pw.println("Added entity:");
-                pw.println(createdEntity);
+                // Build the JSON response.
+                JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+                for (Entity entity : entities) {
+                    JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
 
+                    // Add the ID/name and kind to the JSON object.
+                    if (entity.getKey().getName() == null) {
+                        objectBuilder.add("_key", Json.createValue(entity.getKey().getId()));
+                    } else {
+                        objectBuilder.add("_key", entity.getKey().getName());
+                    }
+                    objectBuilder.add("_kind", entity.getKey().getKind());
+
+                    // Add the properties to the JSON object.
+                    for (String name : entity.getNames()) {
+                        objectBuilder.add(name, entity.getString(name));
+                    }
+
+                    arrayBuilder.add(objectBuilder);
+                }
+
+                response.getWriter().println(arrayBuilder.build().toString());
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 pw.println("Error: the entity could not be written to the datastore");
