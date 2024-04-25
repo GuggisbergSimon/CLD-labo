@@ -83,8 +83,8 @@ Deliverables:
 
 ```
 //TODO - Commit and publish the servlet in your repo, in the 'labo4' directory.
-
 ```
+
 See the [DatastoreWrite.java](./cld-gae/src/main/java/ch/heigvd/cld/lab/DatastoreWrite.java) file.
 
 ```
