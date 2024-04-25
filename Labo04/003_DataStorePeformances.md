@@ -53,21 +53,18 @@ Deliverables:
   OUT="./deliverables"
   URL="https://20240425t141424-dot-t-pulsar-420817.ew.r.appspot.com"
   DURATION="30s"
-  RATE="25"
 
   mkdir -p $OUT
   pushd $OUT
 
   # Test the `hello` servlet
-  echo "GET $URL/hello" | vegeta attack -duration=$DURATION -rate=$RATE > result_hello.bin
+  echo "GET $URL/hello" | vegeta attack -duration=$DURATION | tee result_hello.bin | vegeta plot > plot_hello.html
 
   # Test the `datastorewrite` servlet
   PARAMS="_kind=book&author=Ray%20J.%20Rafaels&title=Cloud%20Computing%3A%20From%20Beginning%20to%20End"
-  echo "GET $URL/datastorewrite?$PARAMS" | vegeta attack -duration=$DURATION -rate=$RATE > result_datastorewrite.bin
+  echo "GET $URL/datastorewrite?$PARAMS" | vegeta attack -duration=$DURATION | tee result_datastorewrite.bin | vegeta plot > plot_datastorewrite.html
 
-  # Generate plots
-  cat result_hello.bin | vegeta plot > plot_hello.html
-  cat result_datastorewrite.bin | vegeta plot > plot_datastorewrite.html
+  # Screenshot the plots
   google-chrome --headless --screenshot="plot_hello.png" --window-size=1900,600 "file://$(pwd)/plot_hello.html"
   google-chrome --headless --screenshot="plot_datastorewrite.png" --window-size=1900,600 "file://$(pwd)/plot_datastorewrite.html"
 
@@ -81,7 +78,9 @@ Deliverables:
 - What response times do you observe for each Servlet?
 
   ```
-  //TODO
+  For the `hello` servlet, the response time varies between 50 ms and 450 ms. The average response time is around 200 ms.
+
+  For the `datastorewrite` servlet, the response time varies between 2000 ms and 28000 ms. The average response time is not inferable from the plot, but it is significantly higher than the `hello` servlet.
   ```
 
 - Compare the response times shown by vegeta with the App Engine
