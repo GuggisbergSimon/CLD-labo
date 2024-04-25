@@ -5,4 +5,5 @@
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
     </system-properties>
+    <app-engine-apis>true</app-engine-apis>
 </appengine-web-app>
