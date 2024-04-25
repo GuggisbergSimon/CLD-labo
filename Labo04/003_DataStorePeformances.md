@@ -68,6 +68,9 @@ Deliverables:
   # Generate plots
   cat result_hello.bin | vegeta plot > plot_hello.html
   cat result_datastorewrite.bin | vegeta plot > plot_datastorewrite.html
+  google-chrome --headless --screenshot="plot_hello.png" --window-size=1900,600 "file://$(pwd)/plot_hello.html"
+  google-chrome --headless --screenshot="plot_datastorewrite.png" --window-size=1900,600 "file://$(pwd)/plot_datastorewrite.html"
+
   popd
   ```
 
