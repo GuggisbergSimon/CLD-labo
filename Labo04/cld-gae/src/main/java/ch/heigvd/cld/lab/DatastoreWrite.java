@@ -58,13 +58,19 @@ public class DatastoreWrite extends HttpServlet {
             final Map<String, String> properties = parameterMap.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue()[0]));
 
             // Save the entity to the datastore.
-            if (createDatastoreEntity(keyKind, keyName, properties)) {
-                pw.println("The entity has been written to the " + datastore.toString() + " datastore.");
+            final Entity createdEntity = createDatastoreEntity(keyKind, keyName, properties);
+
+            if (createdEntity != null) {
+                pw.println("The entity has been written to the " + datastore.getOptions().getProjectId() + " datastore.");
 
                 // Return all entities of the kind that was written.
                 final List<Entity> entities = getAllEntities(keyKind);
                 pw.println("Entities of kind " + keyKind + ":");
                 entities.forEach(e -> pw.println(e.toString()));
+
+                // Return the created entity.
+                pw.println("Added entity:");
+                pw.println(createdEntity);
 
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
@@ -86,7 +92,7 @@ public class DatastoreWrite extends HttpServlet {
      * @param properties The properties of the entity.
      * @return True if the entity was created successfully, false otherwise.
      */
-    private boolean createDatastoreEntity(String keyKind, String keyName, Map<String, String> properties) {
+    private Entity createDatastoreEntity(String keyKind, String keyName, Map<String, String> properties) {
         try {
             final KeyFactory keyFactory = datastore.newKeyFactory().setKind(keyKind);
 
@@ -101,12 +107,11 @@ public class DatastoreWrite extends HttpServlet {
 
             log("Created entity: " + createdEntity.toString());
 
-
-            return true;
+            return createdEntity;
         } catch (DatastoreException e) {
             System.err.println("Error: " + e.getMessage());
 
-            return false;
+            return null;
         }
     }
 
