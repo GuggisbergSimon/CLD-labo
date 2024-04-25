@@ -67,8 +67,8 @@ Deliverables:
   ```
 
   Attack plots:
-  - [plot_hello.html](./deliverables/plot_hello.html)
-  - [plot_datastorewrite.html](./deliverables/plot_datastorewrite.html)
+  - ![plot_hello.png](./deliverables/plot-hello.png)
+  - ![plot_datastorewrite.png](./deliverables/plot-datastore.png)
  
 - What response times do you observe for each Servlet?
 
@@ -90,8 +90,13 @@ Deliverables:
   quotas (**Daily quota** different from 0%). Explain each with a sentence.
   To get a sense of everything that is measured click on **Show resources not in use**.
 
+![quota-details.png](deliverables/quota-details.png)
+
   ```
-  //TODO
+As we've run three sets of tests back to back those number are not representative of a single test, but rather 3.
+Cloud Firestore Read Operations : The number of read operations
+Cloud Firestore API Calls : The number of API calls
+Cloud Firestore Stored Data : The Data 
   ```
 
 - Let's suppose you become suspicious that the algorithm for the automatic scaling of
