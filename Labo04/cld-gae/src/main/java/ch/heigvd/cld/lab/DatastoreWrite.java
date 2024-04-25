@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,10 @@ import java.util.stream.Collectors;
  */
 @WebServlet(name = "DatastoreWrite", value = "/datastorewrite")
 public class DatastoreWrite extends HttpServlet {
+    /**
+     * The Datastore service.
+     */
+    final Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
     /**
      * Get method that writes data to the Datastore.
@@ -53,7 +59,13 @@ public class DatastoreWrite extends HttpServlet {
 
             // Save the entity to the datastore.
             if (createDatastoreEntity(keyKind, keyName, properties)) {
-                pw.println("The entity has been written to the datastore");
+                pw.println("The entity has been written to the " + datastore.toString() + " datastore.");
+
+                // Return all entities of the kind that was written.
+                final List<Entity> entities = getAllEntities(keyKind);
+                pw.println("Entities of kind " + keyKind + ":");
+                entities.forEach(e -> pw.println(e.toString()));
+
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 pw.println("Error: the entity could not be written to the datastore");
@@ -76,8 +88,6 @@ public class DatastoreWrite extends HttpServlet {
      */
     private boolean createDatastoreEntity(String keyKind, String keyName, Map<String, String> properties) {
         try {
-            final Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
-
             final KeyFactory keyFactory = datastore.newKeyFactory().setKind(keyKind);
 
             // Create a new entity with the properties.
@@ -91,11 +101,30 @@ public class DatastoreWrite extends HttpServlet {
 
             log("Created entity: " + createdEntity.toString());
 
+
             return true;
         } catch (DatastoreException e) {
             System.err.println("Error: " + e.getMessage());
 
             return false;
         }
+    }
+
+    /**
+     * Retrieve all entities of a given kind.
+     *
+     * @param kind The kind of the entities to retrieve.
+     * @return A list of entities.
+     */
+    public List<Entity> getAllEntities(String kind) {
+        Query<Entity> query = Query.newEntityQueryBuilder().setKind(kind).build();
+        QueryResults<Entity> results = datastore.run(query);
+
+        List<Entity> entities = new ArrayList<>();
+        while (results.hasNext()) {
+            entities.add(results.next());
+        }
+
+        return entities;
     }
 }
