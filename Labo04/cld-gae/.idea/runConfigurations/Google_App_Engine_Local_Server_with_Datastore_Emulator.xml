@@ -1,7 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Google App Engine Local Server with Datastore Emulator" type="CompoundRunConfigurationType">
-    <toRun name="Google App Engine Standard Local Server" type="gcp-app-engine-local-run" />
-    <toRun name="Google Cloud Datastore Emulator" type="ShConfigurationType" />
-    <method v="2" />
-  </configuration>
-</component>
