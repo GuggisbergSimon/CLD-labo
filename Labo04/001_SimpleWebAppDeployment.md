@@ -211,14 +211,15 @@ appengine-web.xml
 
 This file contains information about the Google App Engine configuration 
 such as Java runtime version, thread safety settings and logging 
-configuration file location.
+configuration file location. There are plenty of parameters that may
+be set in this file to configure the app engine environment.
 ```
 
 ```txt
 index.jsp
 
-The `index.jsp` file is the default file that the server will serve
-when the client requests the root of the web app. It is a JSP file
-(Jakarta Server Pages) that can contain HTML and Java code. It is
-analogous to a template file in PHP/JS.
+The `index.jsp` file is the default file that the server will serve 
+(as indicated in the `web.xml` file) when the client requests the root
+of the web app. It is a JSP file(Jakarta Server Pages) that can contain
+ HTML and Java code. It is analogous to a template file in PHP/JS.
 ```
