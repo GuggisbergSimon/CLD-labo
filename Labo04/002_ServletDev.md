@@ -83,8 +83,18 @@ Deliverables:
 
 ```
 //TODO - Commit and publish the servlet in your repo, in the 'labo4' directory.
+
 ```
+See the [DatastoreWrite.java](./cld-gae/src/main/java/ch/heigvd/cld/lab/DatastoreWrite.java) file.
 
 ```
 //TODO - Copy a screenshot of the local and the App Engine console with the Datastore Viewer.
 ```
+
+### Local Datastore Viewer
+
+![Local Datastore Viewer](./deliverables/local_datastore.png)
+
+### App Engine Datastore Viewer
+
+![App Engine Datastore Viewer](./deliverables/appengine_datastore.png)
