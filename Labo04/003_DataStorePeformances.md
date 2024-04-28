@@ -73,9 +73,9 @@ Deliverables:
 - What response times do you observe for each Servlet?
 
   ```
-  For the `hello` servlet, the response time varies between 50 ms and 450 ms. The average response time is around 200 ms.
+  For the `hello` servlet, the response time varies between 25 ms and 100 ms, with a few peaks between 100 ms and 300 ms. The average response time is around 65 ms. The response time is quite stable and low, which is expected for a simple servlet that does not interact with the datastore. The peaks are likely due to the automatic scaling of the instances. Once the instances are up and running, the response time is stable.
 
-  For the `datastorewrite` servlet, the response time varies between 100 ms and 200ms with a noticeable large spike at 1100 ms. The average response time is not inferable from the plot, but it is significantly higher than the `hello` servlet.
+  For the `datastorewrite` servlet, the response time varies between 100 ms and 200ms with a noticeable large spike at 1100 ms. The average response time is not inferable from the plot, but it is significantly higher than the `hello` servlet. The spikes are likely due to the time it takes to write to the datastore. The datastore is a managed service, and the write operation is therefore not as fast as writing to memory. The datastore is also a distributed system, and the write operation may involve multiple nodes. The scaling of the instances can also be seen, but has less impact on the response time than the datastore write operation.
   ```
 
 - Compare the response times shown by vegeta with the App Engine
@@ -84,8 +84,9 @@ Deliverables:
 ![plot-appengine-datastore.png](deliverables/plot-appengine-datastore.png)
 
 ```
-The App Engine displays as for 50 percentile (median) a value of ~29ms latency for the largest spike during the datastore attack while the 99 percentile is at ~700ms at the same time.
-This is noticeably smaller than vegeta times, as it registers only the time for the servlet to answer, not taking response time into account as vegeta does.
+The App Engine displays a median value of ~29 ms of latency for the largest spike during the datastore attack while the 99 percentile is situated at ~700 ms. This takes into account the time it takes for the request to be processed (including sending the data to the datastore) and the response to be sent back to the client.
+
+This is noticeably smaller than vegeta attack times, as it registers only the time for the servlet to answer, not taking response transit time into account as vegeta does. Poor network performance on the client side may be a factor in the discrepancy.
 ```
 
 - How many resources have you used to run these tests? From the
@@ -96,7 +97,7 @@ This is noticeably smaller than vegeta times, as it registers only the time for 
 ![quota-details.png](deliverables/quota-details.png)
 
 ```
-As we've run three sets of tests back to back those number are not representative of a single test, but rather the 3 of them.
+As we've run three sets of tests back to back. These numbers are therefore  not representative of a single test, but rather 3 of them.
 
 Cloud Firestore Read Operations : The total number of Read operations
 Cloud Firestore API Calls : The total number of API calls used for reading, writing data, deleting, querying documents, etc
@@ -115,6 +116,8 @@ Cloud Storage Network (Egress) – Americas and EMEA : Total amount of data tran
   instances is not working correctly. Imagine a way in which the algorithm could be broken. Which measures shown in the console would you use to detect this failure?
 
 ```
+The algorithm might be broken by not scaling up or down instances as needed leading to over or underutilisation of resources, by not distributing the load evenly among instances or by mismanaging the resources leading to bottlenecks.
+
 Inspecting conspicuous data would be a good way to detect it. 
 Setting up alarms or triggers to ensure things follow the plan is advised.
 - Instance count should vary in size, both growing and shrinking.
