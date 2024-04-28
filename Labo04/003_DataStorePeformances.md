@@ -109,7 +109,31 @@ Cloud Firestore Entity Writes : Number of write operations to update documents i
 Cloud Firestore Entity Deletes : Number of delete operations to remove documents in Cloud Firestore. It is considerably low as well as its presence is due to manual operations done on the data.
 Cloud Firestore Index Write Ops : Number of write operations effected on Cloud Firestore indexes. Of note : every time an entity is updated (written) its index is updated.
 Cloud Firestore Network Egress : Total amount of outbound traffic of data from cloud firestore to the application/other services
-Cloud Storage Network (Egress) – Americas and EMEA : Total amount of data transferred out of cloud firestore to external networks, services, such as cloud storage.
+Cloud Storage Network (Egress) – Americas and EMEA : Total amount of data transferred out of cloud firestore to external networks, services, such as cloud storage. EMEA stands for Europe, Middle East and Africa.
+
+Below is the list of the data unused
+Cloud Datastore Read Operations
+Cloud Datastore Small Operations
+Cloud Datastore API Calls
+Cloud Datastore Queries
+Cloud Firestore Small Operations
+Cloud Firestore Query Ops
+Cloud Firestore Key Fetch Ops
+Cloud Firestore ID Allocation Ops
+Blobstore API Calls
+Blobstore Stored Data
+Data Sent to Cloud Datastore API
+Data Received from Cloud Datastore API
+Cloud Datastore Entity Fetch Ops
+Cloud Datastore Entity Writes
+Cloud Datastore Entity Deletes
+Cloud Datastore Index Write Ops
+Cloud Datastore Query Ops
+Cloud Datastore Key Fetch Ops
+Cloud Datastore ID Allocation Ops
+Cloud Storage Class B Operations
+Cloud Storage Class A Operations
+Cloud Storage Network (Egress) – Asia-Pacific
 ```
 
 - Let's suppose you become suspicious that the algorithm for the automatic scaling of
