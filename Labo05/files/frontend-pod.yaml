@@ -13,4 +13,4 @@ spec:
     - containerPort: 8080
     env:
     - name: API_ENDPOINT_URL
-      value: http://localhost:9000
+      value: http://api-svc:8081

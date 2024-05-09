@@ -136,6 +136,10 @@ Be careful with the indentation of the YAML files. If your code editor has a YAM
 
   * Deploy and verify the API-Service and Pod (similar to the Redis ones) and verify that they are up and running on the correct ports.
 
+```sh
+$ kubectl create -f api-svc.yaml
+```
+
 ### Deploy the Frontend Pod
 
 Using the `api-pod.yaml` file as an example, create the `frontend-pod.yaml` configuration file that starts the UI Docker container in a Pod.
@@ -153,6 +157,10 @@ It also needs to be initialized with the following environment variables (check 
 
   * Deploy the Pod using `kubectl`.
 
+```sh
+$ kubectl create -f frontend-pod.yaml
+```
+
 ### Verify the ToDo application
 
 Now you can verify the the ToDo application is working correctly by connecting to the Frontend Pod. As the Pod's IP address is only accessible from inside the cluster, we have to use a trick.
@@ -169,24 +177,61 @@ where `pod_name` is the name of the Frontend Pod, `pod_port` is the port where t
 
 The command blocks and keeps running to keep the tunnel open. Using your browser or another terminal window you can now access the Pod at <http://localhost:local_port>.
 
+```sh
+$ kubectl port-forward frontend 9000:8080
+```
+
 You should see the application's main page titled __Todos V2__ and you should be able to create a new To Do item. Be patient, the application will be very slow at first.
 
 ## Deliverables
 
 Document any difficulties you faced and how you overcame them. Copy the object descriptions into the lab report.
 
-> // TODO
-
 ```````
-// TODO object descriptions
+We met two difficulties :
+- The url to connect within kubernetes is the name of the service, here 'api-svc' instead of localhost.
+- The port to connect to is the one exposed on the API part, here 8081
 ```````
 
 ```yaml
 # api-svc.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: api
+  name: api-svc
+spec:
+  ports:
+  - port: 8081
+    targetPort: 8081
+    name: api
+  selector:
+    app: todo
+    component: api
+  type: ClusterIP
 ```
 
 ```yaml
 # frontend-pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+  labels:
+    component: frontend
+    app: todo
+spec:
+  containers:
+  - name: frontend
+    image: icclabcna/ccp2-k8s-todo-frontend
+    ports:
+    - containerPort: 8080
+    env:
+    - name: API_ENDPOINT_URL
+      value: http://api-svc:8081
 ```
 
 > [!TIP]
