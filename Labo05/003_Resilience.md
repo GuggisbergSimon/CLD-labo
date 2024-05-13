@@ -83,6 +83,7 @@ kubectl scale --replicas=2 deployment/api-deployment
 
 ```
 It scales based on the CPU utilization of the current pods.
+There is a minimal number of replicas and a maximal one.
 ```
     
   * How can you update a component? (see "Updating a Deployment" in the deployment documentation)
