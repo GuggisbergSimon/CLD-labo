@@ -35,7 +35,7 @@ With that you can use `kubectl` to manage your GKE cluster just as you did in ta
 Should you want to switch contexts, use :
 
 ```sh
-$ kubectl config use-context <context>
+$ kubectl config use-context gke_kubernetes-cld_us-west1-a_gke-cluster-1
 ```
 
 ## Subtask 2.4 - Deploy the ToDo-Frontend Service
@@ -51,6 +51,15 @@ Unlike the Redis and API Services the Frontend needs to be accessible from outsi
     <https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types>
   * Deploy the Service using `kubectl`.
 
+```sh
+kubectl create -f redis-pod.yaml
+kubectl create -f redis-svc.yaml
+kubectl create -f api-pod.yaml
+kubectl create -f api-svc.yaml
+kubectl create -f frontend-pod.yaml
+kubectl create -f frontend-svc.yaml
+```
+
 This will trigger the creation of a load balancer on GKE. This might take some minutes. You can monitor the creation of the load balancer using `kubectl describe`.
 
 ### Verify the ToDo application
@@ -60,25 +69,44 @@ Now you can verify if the ToDo application is working correctly.
   * Find out the public URL of the Frontend Service load balancer using `kubectl describe`.
   * Access the public URL of the Service with a browser. You should be able to access the complete application and create a new ToDo.
 
+```sh
+$ kubectl get svc frontend-svc
+```
 
 ## Deliverables
 
 Document any difficulties you faced and how you overcame them. Copy the object descriptions into the lab report (if they are unchanged from the previous task just say so).
 
-> // TODO
-
 ```````
-// TODO object descriptions
+The only difficulty encountered was to get the IP, as mentioned above, it can be found with a simple command, listed as "EXTERNAL-IP"
 ```````
 
 ```yaml
 # frontend-svc.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: frontend
+  name: frontend-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: frontend
+  selector:
+    app: todo
+    component: frontend
+  type: LoadBalancer
 ```
 
 Take a screenshot of the cluster details from the GKE console. Copy the output of the `kubectl describe` command to describe your load balancer once completely initialized.
 
-> // TODO
+![GKE-details](img/GKE-details.png)
 
-```````
-// TODO object descriptions
+```````sh
+$ kubectl get svc frontend-svc
+NAME           TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
+frontend-svc   LoadBalancer   10.93.120.235   34.168.190.38   80:31261/TCP   13m
 ```````
