@@ -193,7 +193,6 @@ We met two difficulties :
 - The url to connect within kubernetes is the name of the service, here 'api-svc' instead of localhost.
 - The port to connect to is the one exposed on the API part, here 8081.
 ```
-<!-- TODO: clarify with S. why these were difficulties -->
 
 ```yaml
 Name:             api
@@ -412,6 +411,47 @@ Endpoints:         10.244.0.6:6379
 Session Affinity:  None
 Events:            <none>
 ```
+
+```yml
+# api-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: api
+  name: api-svc
+spec:
+  ports:
+  - port: 8081
+    targetPort: 8081
+    name: api
+  selector:
+    app: todo
+    component: api
+  type: ClusterIP
+```
+
+```yml
+# frontend-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+  labels:
+    component: frontend
+    app: todo
+spec:
+  containers:
+  - name: frontend
+    image: icclabcna/ccp2-k8s-todo-frontend
+    ports:
+    - containerPort: 8080
+    env:
+    - name: API_ENDPOINT_URL
+      value: http://api-svc:8081
+```
+
+
 
 > [!TIP]
 >
