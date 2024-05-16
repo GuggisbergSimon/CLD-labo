@@ -27,11 +27,15 @@ public class DatastoreWrite extends HttpServlet {
         String kind = req.getParameter("_kind");
         if (kind == null) {
             resp.getWriter().println("Missing _kind parameter");
+            // GLS: http status code
             return;
         }
 
         String key = req.getParameter("_key");
 
+        // GLS: Could have written
+        // Entity entity = new Entity(kind, key);
+        // Read the javadoc to find out how the classes that you use work
         Entity entity;
         if (key == null) {
             entity = new Entity(kind);
@@ -42,7 +46,8 @@ public class DatastoreWrite extends HttpServlet {
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
             String paramValue = req.getParameter(paramName);
-            if (!paramName.equals("_kind")) {
+            // GLS: extract _kind ?
+            if (!paramName.equals("_kind")) { // GLS: and key ?
                 entity.setProperty(paramName, paramValue);
             }
         }
