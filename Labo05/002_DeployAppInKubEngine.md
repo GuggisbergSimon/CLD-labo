@@ -35,7 +35,7 @@ With that you can use `kubectl` to manage your GKE cluster just as you did in ta
 Should you want to switch contexts, use :
 
 ```sh
-kubectl config use-context gke_kubernetes-cld_us-west1-a_gke-cluster-1
+$ kubectl config use-context gke_kubernetes-cld_us-west1-a_gke-cluster-1
 ```
 
 ## Subtask 2.4 - Deploy the ToDo-Frontend Service
@@ -58,6 +58,11 @@ This will trigger the creation of a load balancer on GKE. This might take some m
 Now you can verify if the ToDo application is working correctly.
 
   * Find out the public URL of the Frontend Service load balancer using `kubectl describe`.
+
+    ```sh
+    $ kubectl get svc frontend-svc
+    ```
+
   * Access the public URL of the Service with a browser. You should be able to access the complete application and create a new ToDo.
 
 ## Deliverables
