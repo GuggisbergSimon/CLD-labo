@@ -1,0 +1,574 @@
+Name:             api-deployment-664fbdf7d9-dr86s
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             gke-gke-cluster-1-default-pool-fee6c77f-f46f/10.138.0.4
+Start Time:       Thu, 16 May 2024 15:19:37 +0200
+Labels:           app=todo
+                  component=api
+                  pod-template-hash=664fbdf7d9
+Annotations:      <none>
+Status:           Running
+IP:               10.36.1.11
+IPs:
+  IP:           10.36.1.11
+Controlled By:  ReplicaSet/api-deployment-664fbdf7d9
+Containers:
+  api:
+    Container ID:   containerd://11b47afc95c5ede0e1265f794b0b1bb7c7db195a83e522bd08d091ddd380dc38
+    Image:          icclabcna/ccp2-k8s-todo-api
+    Image ID:       docker.io/icclabcna/ccp2-k8s-todo-api@sha256:13cb50bc9e93fdf10b4608f04f2966e274470f00c0c9f60815ec8fc987cd6e03
+    Port:           8081/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Thu, 16 May 2024 15:21:56 +0200
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Thu, 16 May 2024 15:19:40 +0200
+      Finished:     Thu, 16 May 2024 15:21:55 +0200
+    Ready:          True
+    Restart Count:  1
+    Environment:
+      REDIS_ENDPOINT:  redis-svc
+      REDIS_PWD:       ccp2
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-6qh9c (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-6qh9c:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age                From               Message
+  ----    ------     ----               ----               -------
+  Normal  Scheduled  42m                default-scheduler  Successfully assigned default/api-deployment-664fbdf7d9-dr86s to gke-gke-cluster-1-default-pool-fee6c77f-f46f
+  Normal  Pulled     42m                kubelet            Successfully pulled image "icclabcna/ccp2-k8s-todo-api" in 685ms (685ms including waiting)
+  Normal  Pulling    40m (x2 over 42m)  kubelet            Pulling image "icclabcna/ccp2-k8s-todo-api"
+  Normal  Created    40m (x2 over 42m)  kubelet            Created container api
+  Normal  Started    40m (x2 over 42m)  kubelet            Started container api
+  Normal  Pulled     40m                kubelet            Successfully pulled image "icclabcna/ccp2-k8s-todo-api" in 371ms (373ms including waiting)
+
+
+Name:             api-deployment-664fbdf7d9-r9nzl
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             gke-gke-cluster-1-default-pool-fee6c77f-cqn3/10.138.0.3
+Start Time:       Thu, 16 May 2024 15:19:37 +0200
+Labels:           app=todo
+                  component=api
+                  pod-template-hash=664fbdf7d9
+Annotations:      <none>
+Status:           Running
+IP:               10.36.0.17
+IPs:
+  IP:           10.36.0.17
+Controlled By:  ReplicaSet/api-deployment-664fbdf7d9
+Containers:
+  api:
+    Container ID:   containerd://275eae6f14e7068cf4e70f194115879c1560fd35591a2737ce435ab92cb4b46e
+    Image:          icclabcna/ccp2-k8s-todo-api
+    Image ID:       docker.io/icclabcna/ccp2-k8s-todo-api@sha256:13cb50bc9e93fdf10b4608f04f2966e274470f00c0c9f60815ec8fc987cd6e03
+    Port:           8081/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Thu, 16 May 2024 15:19:54 +0200
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Thu, 16 May 2024 15:19:40 +0200
+      Finished:     Thu, 16 May 2024 15:19:48 +0200
+    Ready:          True
+    Restart Count:  1
+    Environment:
+      REDIS_ENDPOINT:  redis-svc
+      REDIS_PWD:       ccp2
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-nmb44 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-nmb44:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age                From               Message
+  ----    ------     ----               ----               -------
+  Normal  Scheduled  42m                default-scheduler  Successfully assigned default/api-deployment-664fbdf7d9-r9nzl to gke-gke-cluster-1-default-pool-fee6c77f-cqn3
+  Normal  Pulled     42m                kubelet            Successfully pulled image "icclabcna/ccp2-k8s-todo-api" in 453ms (453ms including waiting)
+  Normal  Pulling    42m (x2 over 42m)  kubelet            Pulling image "icclabcna/ccp2-k8s-todo-api"
+  Normal  Pulled     42m                kubelet            Successfully pulled image "icclabcna/ccp2-k8s-todo-api" in 1.036s (1.037s including waiting)
+  Normal  Created    42m (x2 over 42m)  kubelet            Created container api
+  Normal  Started    42m (x2 over 42m)  kubelet            Started container api
+
+
+Name:             frontend-deployment-67879ff5df-7hn9n
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             gke-gke-cluster-1-default-pool-fee6c77f-f46f/10.138.0.4
+Start Time:       Thu, 16 May 2024 15:19:37 +0200
+Labels:           app=todo
+                  component=frontend
+                  pod-template-hash=67879ff5df
+Annotations:      <none>
+Status:           Running
+IP:               10.36.1.10
+IPs:
+  IP:           10.36.1.10
+Controlled By:  ReplicaSet/frontend-deployment-67879ff5df
+Containers:
+  frontend:
+    Container ID:   containerd://27cbcab09cd3af653107efb5b870de3fb1eadc62f8ab024877abc66e4ac9fc99
+    Image:          icclabcna/ccp2-k8s-todo-frontend
+    Image ID:       docker.io/icclabcna/ccp2-k8s-todo-frontend@sha256:5892b8f75a4dd3aa9d9cf527f8796a7638dba574ea8e6beef49360a3c67bbb44
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Thu, 16 May 2024 15:19:40 +0200
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      API_ENDPOINT_URL:  http://api-svc:8081
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-grbmm (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-grbmm:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  42m   default-scheduler  Successfully assigned default/frontend-deployment-67879ff5df-7hn9n to gke-gke-cluster-1-default-pool-fee6c77f-f46f
+  Normal  Pulling    42m   kubelet            Pulling image "icclabcna/ccp2-k8s-todo-frontend"
+  Normal  Pulled     42m   kubelet            Successfully pulled image "icclabcna/ccp2-k8s-todo-frontend" in 1.067s (1.067s including waiting)
+  Normal  Created    42m   kubelet            Created container frontend
+  Normal  Started    42m   kubelet            Started container frontend
+
+
+Name:             frontend-deployment-67879ff5df-tdqw2
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             gke-gke-cluster-1-default-pool-fee6c77f-cqn3/10.138.0.3
+Start Time:       Thu, 16 May 2024 15:19:37 +0200
+Labels:           app=todo
+                  component=frontend
+                  pod-template-hash=67879ff5df
+Annotations:      <none>
+Status:           Running
+IP:               10.36.0.16
+IPs:
+  IP:           10.36.0.16
+Controlled By:  ReplicaSet/frontend-deployment-67879ff5df
+Containers:
+  frontend:
+    Container ID:   containerd://e1afafddfc97452dfdd56e4b11438295d95109edc6550bc665f8cfba8b2f2559
+    Image:          icclabcna/ccp2-k8s-todo-frontend
+    Image ID:       docker.io/icclabcna/ccp2-k8s-todo-frontend@sha256:5892b8f75a4dd3aa9d9cf527f8796a7638dba574ea8e6beef49360a3c67bbb44
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Thu, 16 May 2024 15:19:40 +0200
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      API_ENDPOINT_URL:  http://api-svc:8081
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-vtblt (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-vtblt:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  42m   default-scheduler  Successfully assigned default/frontend-deployment-67879ff5df-tdqw2 to gke-gke-cluster-1-default-pool-fee6c77f-cqn3
+  Normal  Pulling    42m   kubelet            Pulling image "icclabcna/ccp2-k8s-todo-frontend"
+  Normal  Pulled     42m   kubelet            Successfully pulled image "icclabcna/ccp2-k8s-todo-frontend" in 468ms (468ms including waiting)
+  Normal  Created    42m   kubelet            Created container frontend
+  Normal  Started    42m   kubelet            Started container frontend
+
+
+Name:             redis-deployment-56fb88dd96-59g92
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             gke-gke-cluster-1-default-pool-fee6c77f-cqn3/10.138.0.3
+Start Time:       Thu, 16 May 2024 15:19:37 +0200
+Labels:           app=todo
+                  component=redis
+                  pod-template-hash=56fb88dd96
+Annotations:      <none>
+Status:           Running
+IP:               10.36.0.18
+IPs:
+  IP:           10.36.0.18
+Controlled By:  ReplicaSet/redis-deployment-56fb88dd96
+Containers:
+  redis:
+    Container ID:  containerd://b3c1f92209170402a898ff0d6ca3122344fe6722e9fc8b75996b7f63b40c5544
+    Image:         redis
+    Image ID:      docker.io/library/redis@sha256:5a93f6b2e391b78e8bd3f9e7e1e1e06aeb5295043b4703fb88392835cec924a0
+    Port:          6379/TCP
+    Host Port:     0/TCP
+    Args:
+      redis-server
+      --requirepass ccp2
+      --appendonly yes
+    State:          Running
+      Started:      Thu, 16 May 2024 15:19:53 +0200
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-9tgbj (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-9tgbj:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  42m   default-scheduler  Successfully assigned default/redis-deployment-56fb88dd96-59g92 to gke-gke-cluster-1-default-pool-fee6c77f-cqn3
+  Normal  Pulling    42m   kubelet            Pulling image "redis"
+  Normal  Pulled     42m   kubelet            Successfully pulled image "redis" in 11.663s (11.666s including waiting)
+  Normal  Created    42m   kubelet            Created container redis
+  Normal  Started    42m   kubelet            Started container redis
+
+
+Name:              api-svc
+Namespace:         default
+Labels:            component=api
+Annotations:       cloud.google.com/neg: {"ingress":true}
+Selector:          app=todo,component=api
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.93.113.153
+IPs:               10.93.113.153
+Port:              api  8081/TCP
+TargetPort:        8081/TCP
+Endpoints:         10.36.0.17:8081,10.36.1.11:8081
+Session Affinity:  None
+Events:            <none>
+
+
+Name:                     frontend-svc
+Namespace:                default
+Labels:                   component=frontend
+Annotations:              cloud.google.com/neg: {"ingress":true}
+Selector:                 app=todo,component=frontend
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.93.120.235
+IPs:                      10.93.120.235
+LoadBalancer Ingress:     34.168.190.38
+Port:                     frontend  80/TCP
+TargetPort:               8080/TCP
+NodePort:                 frontend  31261/TCP
+Endpoints:                10.36.0.16:8080,10.36.1.10:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+
+Name:              kubernetes
+Namespace:         default
+Labels:            component=apiserver
+                   provider=kubernetes
+Annotations:       <none>
+Selector:          <none>
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.93.112.1
+IPs:               10.93.112.1
+Port:              https  443/TCP
+TargetPort:        443/TCP
+Endpoints:         10.138.0.2:443
+Session Affinity:  None
+Events:            <none>
+
+
+Name:              redis-svc
+Namespace:         default
+Labels:            component=redis
+Annotations:       cloud.google.com/neg: {"ingress":true}
+Selector:          app=todo,component=redis
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.93.120.67
+IPs:               10.93.120.67
+Port:              redis  6379/TCP
+TargetPort:        6379/TCP
+Endpoints:         10.36.0.18:6379
+Session Affinity:  None
+Events:            <none>
+
+
+Name:                   api-deployment
+Namespace:              default
+CreationTimestamp:      Mon, 13 May 2024 15:14:55 +0200
+Labels:                 app=todo
+                        component=api
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=todo,component=api
+Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=todo
+           component=api
+  Containers:
+   api:
+    Image:      icclabcna/ccp2-k8s-todo-api
+    Port:       8081/TCP
+    Host Port:  0/TCP
+    Environment:
+      REDIS_ENDPOINT:  redis-svc
+      REDIS_PWD:       ccp2
+    Mounts:            <none>
+  Volumes:             <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   api-deployment-664fbdf7d9 (2/2 replicas created)
+Events:          <none>
+
+
+Name:                   frontend-deployment
+Namespace:              default
+CreationTimestamp:      Mon, 13 May 2024 15:15:15 +0200
+Labels:                 app=todo
+                        component=frontend
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=todo,component=frontend
+Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=todo
+           component=frontend
+  Containers:
+   frontend:
+    Image:      icclabcna/ccp2-k8s-todo-frontend
+    Port:       8080/TCP
+    Host Port:  0/TCP
+    Environment:
+      API_ENDPOINT_URL:  http://api-svc:8081
+    Mounts:              <none>
+  Volumes:               <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   frontend-deployment-67879ff5df (2/2 replicas created)
+Events:          <none>
+
+
+Name:                   redis-deployment
+Namespace:              default
+CreationTimestamp:      Mon, 13 May 2024 15:14:33 +0200
+Labels:                 app=todo
+                        component=redis
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=todo,component=redis
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=todo
+           component=redis
+  Containers:
+   redis:
+    Image:      redis
+    Port:       6379/TCP
+    Host Port:  0/TCP
+    Args:
+      redis-server
+      --requirepass ccp2
+      --appendonly yes
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   redis-deployment-56fb88dd96 (1/1 replicas created)
+Events:          <none>
+
+
+Name:           api-deployment-664fbdf7d9
+Namespace:      default
+Selector:       app=todo,component=api,pod-template-hash=664fbdf7d9
+Labels:         app=todo
+                component=api
+                pod-template-hash=664fbdf7d9
+Annotations:    deployment.kubernetes.io/desired-replicas: 2
+                deployment.kubernetes.io/max-replicas: 3
+                deployment.kubernetes.io/revision: 1
+Controlled By:  Deployment/api-deployment
+Replicas:       2 current / 2 desired
+Pods Status:    2 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=todo
+           component=api
+           pod-template-hash=664fbdf7d9
+  Containers:
+   api:
+    Image:      icclabcna/ccp2-k8s-todo-api
+    Port:       8081/TCP
+    Host Port:  0/TCP
+    Environment:
+      REDIS_ENDPOINT:  redis-svc
+      REDIS_PWD:       ccp2
+    Mounts:            <none>
+  Volumes:             <none>
+Events:
+  Type    Reason            Age   From                   Message
+  ----    ------            ----  ----                   -------
+  Normal  SuccessfulCreate  42m   replicaset-controller  Created pod: api-deployment-664fbdf7d9-r9nzl
+  Normal  SuccessfulCreate  42m   replicaset-controller  Created pod: api-deployment-664fbdf7d9-dr86s
+
+
+Name:           frontend-deployment-67879ff5df
+Namespace:      default
+Selector:       app=todo,component=frontend,pod-template-hash=67879ff5df
+Labels:         app=todo
+                component=frontend
+                pod-template-hash=67879ff5df
+Annotations:    deployment.kubernetes.io/desired-replicas: 2
+                deployment.kubernetes.io/max-replicas: 3
+                deployment.kubernetes.io/revision: 1
+Controlled By:  Deployment/frontend-deployment
+Replicas:       2 current / 2 desired
+Pods Status:    2 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=todo
+           component=frontend
+           pod-template-hash=67879ff5df
+  Containers:
+   frontend:
+    Image:      icclabcna/ccp2-k8s-todo-frontend
+    Port:       8080/TCP
+    Host Port:  0/TCP
+    Environment:
+      API_ENDPOINT_URL:  http://api-svc:8081
+    Mounts:              <none>
+  Volumes:               <none>
+Events:
+  Type    Reason            Age   From                   Message
+  ----    ------            ----  ----                   -------
+  Normal  SuccessfulCreate  42m   replicaset-controller  Created pod: frontend-deployment-67879ff5df-tdqw2
+  Normal  SuccessfulCreate  42m   replicaset-controller  Created pod: frontend-deployment-67879ff5df-7hn9n
+
+
+Name:           redis-deployment-56fb88dd96
+Namespace:      default
+Selector:       app=todo,component=redis,pod-template-hash=56fb88dd96
+Labels:         app=todo
+                component=redis
+                pod-template-hash=56fb88dd96
+Annotations:    deployment.kubernetes.io/desired-replicas: 1
+                deployment.kubernetes.io/max-replicas: 2
+                deployment.kubernetes.io/revision: 1
+Controlled By:  Deployment/redis-deployment
+Replicas:       1 current / 1 desired
+Pods Status:    1 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=todo
+           component=redis
+           pod-template-hash=56fb88dd96
+  Containers:
+   redis:
+    Image:      redis
+    Port:       6379/TCP
+    Host Port:  0/TCP
+    Args:
+      redis-server
+      --requirepass ccp2
+      --appendonly yes
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Events:
+  Type    Reason            Age   From                   Message
+  ----    ------            ----  ----                   -------
+  Normal  SuccessfulCreate  42m   replicaset-controller  Created pod: redis-deployment-56fb88dd96-59g92
