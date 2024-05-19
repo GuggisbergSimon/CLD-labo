@@ -193,6 +193,8 @@ Document your observations in the lab report. Document any difficulties you face
 
 > // TODO
 
+![vegeta-plot-all](img/vegeta-plot-all.png)
+
 ```````sh
 // TODO object descriptions
 // TODO autoscaling describe
