@@ -73,7 +73,6 @@ Document any difficulties you faced and how you overcame them. Copy the object d
 ```txt
 Only the api-service object has changed. It is listed below.
 ```
-<!-- TODO: check that this is actually true -->
 
 ```yaml
 # frontend-svc.yaml
