@@ -1,0 +1,27 @@
+- name: Configure webserver with NGINX
+  hosts: webservers
+  become: True
+  tasks:
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: Copy NGINX config file
+      copy:
+        src: files/nginx.conf
+        dest: /etc/nginx/sites-available/default
+    - name: Enable the config file via symbolic link
+      file:
+        src: /etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+    - name: Template index.html.j2 to index.html
+      template:
+        src: templates/index.html.j2
+        dest: /usr/share/nginx/html/index.html
+        mode: 0644
+    - name: Restart NGINX
+      service:
+        name: nginx
+        state: restarted
