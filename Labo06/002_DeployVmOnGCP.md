@@ -127,11 +127,11 @@ Using  `tree`, we can see that the following files and folders were created in t
 * What are they used for?
 
 //TODO
-| File/FolderName    | Explanation                                                                           |
-| :----------------- | :------------------------------------------------------------------------------------ |
-| terraform.lock.hcl | Lock file that records the provider selections made during the initialization process |
-| terraform.tfstate  | Describes the current state of the infrastructure                                      |
-| terraform-provider-google_v5.30.0_x5 | The Terraform provider plugin used to manage the resources |
+| File/FolderName                      | Explanation                                                                           |
+| :----------------------------------- | :------------------------------------------------------------------------------------ |
+| terraform.lock.hcl                   | Lock file that records the provider selections made during the initialization process |
+| terraform.tfstate                    | Describes the current state of the infrastructure                                     |
+| terraform-provider-google_v5.30.0_x5 | The Terraform provider plugin used to manage the resources                            |
 
 **Note**: all files are managed by `terraform` itself.
 
@@ -192,42 +192,54 @@ If no errors occur, you have successfully managed to create a VM on Google Cloud
 After launching make sure you can SSH into the VM using your private
 key and the Linux system user account name defined in the `terraform.tfvars` file.
 
-Deliverables:
+## Deliverables:
 
 * Explain the usage of each provided file and its contents by directly adding comments in the file as needed (we must ensure that you understood what you have done). In the file `variables.tf` fill the missing documentation parts and link to the online documentation. Copy the modified files to the report.
 
-```
-//TODO
-```
+See the following files:
+
+| File                                             |
+| :----------------------------------------------- |
+| [backend.tf](./terraform/backend.tf)             |
+| [main.tf](./terraform/main.tf)                   |
+| [outputs.tf](./terraform/outputs.tf)             |
+| [terraform.tfvars](./terraform/terraform.tfvars) |
+| [variables.tf](./terraform/variables.tf)         |
 
 * Explain what the files created by Terraform are used for.
 
-```
-//TODO
-```
+| File/FolderName                      | Explanation                                                                           |
+| :----------------------------------- | :------------------------------------------------------------------------------------ |
+| terraform.lock.hcl                   | Lock file that records the provider selections made during the initialization process |
+| terraform.tfstate                    | Describes the current state of the infrastructure                                     |
+| terraform-provider-google_v5.30.0_x5 | The Terraform provider plugin used to manage the resources                            |
 
 * Where is the Terraform state saved? Imagine you are working in a team and the other team members want to use Terraform, too, to manage the cloud infrastructure. Do you see any problems with this? Explain.
 
 ```
-//TODO
+In the `.terraform/terraform.tfstate` file. The issue lies within the fact that the state file is stored on a local machine. This means that other team members will not have access to the state file, which is necessary for Terraform to manage the infrastructure. 
+
+To solve this issue, the state file can be stored in a remote location (S3 bucket, Google Cloud Storage, HCP). This makes it possible for all team members to access the state file and manage the infrastructure using Terraform.
 ```
 
 * What happens if you reapply the configuration (1) without changing `main.tf` (2) with a change in `main.tf`? Do you see any changes in Terraform's output? Why? Can you think of examples where Terraform needs to delete parts of the infrastructure to be able to reconfigure it?
 
 ```
-//TODO
+// TODO
 ```
 
 * Explain what you would need to do to manage multiple instances.
 
-```
-//TODO
+```txt
+To manage multiple instances, one would need to create a Terraform module that can be used to create multiple instances. The module contains the necessary resources and variables to create the instances. It will be called multiple times with different values for the variables to create the desired number of instances. The variables must be defined in the module and passed as arguments when calling the module. The module may then be called multiple times in the main configuration file to create multiple instances.
 ```
 
 * Take a screenshot of the Google Cloud Console showing your Google Compute instance and put it in the report.
 
 ```
-//TODO
+// TODO
 ```
 
 * Deliver a folder "terraform" with your configuration.
+
+See the [terraform](./terraform) folder.
