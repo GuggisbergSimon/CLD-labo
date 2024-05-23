@@ -8,6 +8,7 @@ This task is highly inspired from the following guide: [Get started with Terrafo
 Create a new Google Cloud project. Save the project ID, it will be used later.
 
 * Name: __labgce__
+* Project id: `labgce-424207`
 
 As we want to create a VM, you need to enable the Compute Engine API:
 
@@ -69,24 +70,70 @@ You can now initialize the Terraform state:
     cd terraform
     terraform init
 
-//TODO
-[OUTPUT]
-```bash
+<!-- //TODO -->
+
+**\[OUTPUT\]**
+
+```txt
+Initializing the backend...
+
+Successfully configured the backend "local"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Finding latest version of hashicorp/google...
+- Installing hashicorp/google v5.30.0...
+- Installed hashicorp/google v5.30.0 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
 ```
     
 * What files were created in the `terraform` directory? Make sure to look also at hidden files and directories (`ls -a`).
 
-//TODO
-[OUTPUT]
-```bash
+<!-- //TODO -->
+
+**\[OUTPUT\]**
+
+```txt
+Using  `tree`, we can see that the following files and folders were created in the `terraform` directory:
+
+├── .terraform
+│   ├── providers
+│   │   └── registry.terraform.io
+│   │       └── hashicorp
+│   │           └── google
+│   │               └── 5.30.0
+│   │                   └── linux_amd64
+│   │                       ├── LICENSE.txt
+│   │                       └── terraform-provider-google_v5.30.0_x5
+│   └── terraform.tfstate
+├── .terraform.lock.hcl
+
 ```
 
 * What are they used for?
 
 //TODO
-|File/FolderName|Explanation|
-|:--|:--|
-|||
+| File/FolderName    | Explanation                                                                           |
+| :----------------- | :------------------------------------------------------------------------------------ |
+| terraform.lock.hcl | Lock file that records the provider selections made during the initialization process |
+| terraform.tfstate  | Describes the current state of the infrastructure                                      |
+| terraform-provider-google_v5.30.0_x5 | The Terraform provider plugin used to manage the resources |
+
+**Note**: all files are managed by `terraform` itself.
 
 
 * Check that your Terraform configuration is valid:
@@ -95,20 +142,29 @@ You can now initialize the Terraform state:
 terraform validate
 ```
 
-//TODO
-[OUTPUT]
-```bash
+<!-- //TODO -->
+**\[OUTPUT\]**
+
+```txt
+Success! The configuration is valid.
 ```
 
 * Create an execution plan to preview the changes that will be made to your infrastructure and save it locally:
 
 ```bash
 terraform plan -input=false -out=.terraform/plan.cache
+
+# Actual command that was used:
+terraform plan -json -input=false -out=.terraform/plan.cache | jq > deliverables/planCache.json
 ```
 
-```
+**\[OUTPUT\]**
+
+See [planCache.json](./deliverables/planCache.json)
+
+<!-- ```
 //TODO - copy the command result in a file named "planCache.json" and add it to your lab repo.
-```
+``` -->
 
 * If satisfied with your execution plan, apply it:
 
