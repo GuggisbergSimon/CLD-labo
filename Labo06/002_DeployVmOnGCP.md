@@ -172,6 +172,8 @@ See [planCache.json](./deliverables/planCache.json)
     terraform apply -input=false .terraform/plan.cache
 ```
 
+**\[OUTPUT\]**
+
 ```
 //TODO - copy the command result in a file name "planCacheApplied.txt
 ```
@@ -179,11 +181,13 @@ See [planCache.json](./deliverables/planCache.json)
 * Test access via ssh
 
 //TODO
-[INPUT]
+**\[INPUT\]**
+
 ```bash
 ```
 
-[OUTPUT]
+**\[OUTPUT\]**
+
 ```
 ```
 
