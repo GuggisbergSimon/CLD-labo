@@ -155,7 +155,7 @@ Success! The configuration is valid.
 terraform plan -input=false -out=.terraform/plan.cache
 
 # Actual command that was used:
-terraform plan -json -input=false -out=.terraform/plan.cache | jq > deliverables/planCache.json
+terraform plan -json -input=false -out=.terraform/plan.cache | jq > ../deliverables/planCache.json
 ```
 
 **\[OUTPUT\]**
@@ -169,14 +169,12 @@ See [planCache.json](./deliverables/planCache.json)
 * If satisfied with your execution plan, apply it:
 
 ```bash
-    terraform apply -input=false .terraform/plan.cache
+terraform apply -input=false .terraform/plan.cache
 ```
 
 **\[OUTPUT\]**
 
-```
-//TODO - copy the command result in a file name "planCacheApplied.txt
-```
+See [planCacheApplied.txt](deliverables/planCacheApplied.txt)
 
 * Test access via ssh
 
@@ -184,11 +182,27 @@ See [planCache.json](./deliverables/planCache.json)
 **\[INPUT\]**
 
 ```bash
+ssh gce-adm@34.65.222.7 -i credentials/labgce-ssh-key
 ```
 
 **\[OUTPUT\]**
 
 ```
+The authenticity of host '34.65.222.7 (34.65.222.7)' can't be established.
+ED25519 key fingerprint is SHA256:qLEEWOwtDFb+olFAszqMDFrexlCwmOBfwVl2bUxv4Nw.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '34.65.222.7' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1060-gcp x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Sun May 26 14:54:18 UTC 2024
+
+  System load:  0.7               Processes:             95
+  Usage of /:   19.1% of 9.51GB   Users logged in:       0
 ```
 
 If no errors occur, you have successfully managed to create a VM on Google Cloud using Terraform. You should see the IP of the Google Compute instance in the console. Save the instance IP, it will be used later.
@@ -228,8 +242,16 @@ To solve this issue, the state file can be stored in a remote location (S3 bucke
 
 * What happens if you reapply the configuration (1) without changing `main.tf` (2) with a change in `main.tf`? Do you see any changes in Terraform's output? Why? Can you think of examples where Terraform needs to delete parts of the infrastructure to be able to reconfigure it?
 
-```
-// TODO
+```txt
+We get the following error:
+
+╷
+│ Error: Saved plan is stale
+│ 
+│ The given plan file can no longer be applied because the state was changed by another operation after the plan was created.
+╵
+
+This error occurs because the state of the infrastructure has changed since the plan was created. Terraform compares the state of the infrastructure with the state in the plan file to ensure that the plan is still valid. If the state has changed, Terraform will not apply the plan and will return an error.
 ```
 
 * Explain what you would need to do to manage multiple instances.
@@ -240,9 +262,7 @@ To manage multiple instances, one would need to create a Terraform module that c
 
 * Take a screenshot of the Google Cloud Console showing your Google Compute instance and put it in the report.
 
-```
-// TODO
-```
+![gceInstance.png](./deliverables/gceInstance.png)
 
 * Deliver a folder "terraform" with your configuration.
 

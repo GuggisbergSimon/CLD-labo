@@ -1,214 +1,93 @@
-[
-    {
-        "@level": "info",
-        "@message": "Terraform 1.8.4",
-        "@module": "terraform.ui",
-        "@timestamp": "2024-05-23T13:48:39.052087+02:00",
-        "terraform": "1.8.4",
-        "type": "version",
-        "ui": "1.2"
+{
+  "@level": "info",
+  "@message": "Terraform 1.8.4",
+  "@module": "terraform.ui",
+  "@timestamp": "2024-05-26T16:52:13.274444+02:00",
+  "terraform": "1.8.4",
+  "type": "version",
+  "ui": "1.2"
+}
+{
+  "@level": "info",
+  "@message": "google_compute_firewall.http: Plan to create",
+  "@module": "terraform.ui",
+  "@timestamp": "2024-05-26T16:52:15.189910+02:00",
+  "change": {
+    "resource": {
+      "addr": "google_compute_firewall.http",
+      "module": "",
+      "resource": "google_compute_firewall.http",
+      "implied_provider": "google",
+      "resource_type": "google_compute_firewall",
+      "resource_name": "http",
+      "resource_key": null
     },
-    {
-        "@level": "info",
-        "@message": "google_compute_firewall.http: Plan to create",
-        "@module": "terraform.ui",
-        "@timestamp": "2024-05-23T13:48:40.098770+02:00",
-        "change": {
-            "resource": {
-                "addr": "google_compute_firewall.http",
-                "module": "",
-                "resource": "google_compute_firewall.http",
-                "implied_provider": "google",
-                "resource_type": "google_compute_firewall",
-                "resource_name": "http",
-                "resource_key": null
-            },
-            "action": "create"
-        },
-        "type": "planned_change"
+    "action": "create"
+  },
+  "type": "planned_change"
+}
+{
+  "@level": "info",
+  "@message": "google_compute_firewall.ssh: Plan to create",
+  "@module": "terraform.ui",
+  "@timestamp": "2024-05-26T16:52:15.190077+02:00",
+  "change": {
+    "resource": {
+      "addr": "google_compute_firewall.ssh",
+      "module": "",
+      "resource": "google_compute_firewall.ssh",
+      "implied_provider": "google",
+      "resource_type": "google_compute_firewall",
+      "resource_name": "ssh",
+      "resource_key": null
     },
-    {
-        "@level": "info",
-        "@message": "google_compute_firewall.ssh: Plan to create",
-        "@module": "terraform.ui",
-        "@timestamp": "2024-05-23T13:48:40.098863+02:00",
-        "change": {
-            "resource": {
-                "addr": "google_compute_firewall.ssh",
-                "module": "",
-                "resource": "google_compute_firewall.ssh",
-                "implied_provider": "google",
-                "resource_type": "google_compute_firewall",
-                "resource_name": "ssh",
-                "resource_key": null
-            },
-            "action": "create"
-        },
-        "type": "planned_change"
+    "action": "create"
+  },
+  "type": "planned_change"
+}
+{
+  "@level": "info",
+  "@message": "google_compute_instance.default: Plan to create",
+  "@module": "terraform.ui",
+  "@timestamp": "2024-05-26T16:52:15.190099+02:00",
+  "change": {
+    "resource": {
+      "addr": "google_compute_instance.default",
+      "module": "",
+      "resource": "google_compute_instance.default",
+      "implied_provider": "google",
+      "resource_type": "google_compute_instance",
+      "resource_name": "default",
+      "resource_key": null
     },
-    {
-        "@level": "info",
-        "@message": "google_compute_instance.default: Plan to create",
-        "@module": "terraform.ui",
-        "@timestamp": "2024-05-23T13:48:40.098881+02:00",
-        "change": {
-            "resource": {
-                "addr": "google_compute_instance.default",
-                "module": "",
-                "resource": "google_compute_instance.default",
-                "implied_provider": "google",
-                "resource_type": "google_compute_instance",
-                "resource_name": "default",
-                "resource_key": null
-            },
-            "action": "create"
-        },
-        "type": "planned_change"
-    },
-    {
-        "@level": "info",
-        "@message": "Plan: 3 to add, 0 to change, 0 to destroy.",
-        "@module": "terraform.ui",
-        "@timestamp": "2024-05-23T13:48:40.098894+02:00",
-        "changes": {
-            "add": 3,
-            "change": 0,
-            "import": 0,
-            "remove": 0,
-            "operation": "plan"
-        },
-        "type": "change_summary"
-    },
-    {
-        "@level": "info",
-        "@message": "Outputs: 1",
-        "@module": "terraform.ui",
-        "@timestamp": "2024-05-23T13:48:40.098934+02:00",
-        "outputs": {
-            "gce_instance_ip": {
-                "sensitive": false,
-                "action": "create"
-            }
-        },
-        "type": "outputs"
+    "action": "create"
+  },
+  "type": "planned_change"
+}
+{
+  "@level": "info",
+  "@message": "Plan: 3 to add, 0 to change, 0 to destroy.",
+  "@module": "terraform.ui",
+  "@timestamp": "2024-05-26T16:52:15.190148+02:00",
+  "changes": {
+    "add": 3,
+    "change": 0,
+    "import": 0,
+    "remove": 0,
+    "operation": "plan"
+  },
+  "type": "change_summary"
+}
+{
+  "@level": "info",
+  "@message": "Outputs: 1",
+  "@module": "terraform.ui",
+  "@timestamp": "2024-05-26T16:52:15.190200+02:00",
+  "outputs": {
+    "gce_instance_ip": {
+      "sensitive": false,
+      "action": "create"
     }
-]
-
-// Exact output from `terraform plan`:
-
-// Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
-//   + create
-
-// Terraform will perform the following actions:
-
-//   # google_compute_firewall.http will be created
-//   + resource "google_compute_firewall" "http" {
-//       + creation_timestamp = (known after apply)
-//       + destination_ranges = (known after apply)
-//       + direction          = (known after apply)
-//       + enable_logging     = (known after apply)
-//       + id                 = (known after apply)
-//       + name               = "allow-http"
-//       + network            = "default"
-//       + priority           = 1000
-//       + project            = "labgce-424207"
-//       + self_link          = (known after apply)
-//       + source_ranges      = [
-//           + "0.0.0.0/0",
-//         ]
-
-//       + allow {
-//           + ports    = [
-//               + "80",
-//             ]
-//           + protocol = "tcp"
-//         }
-//     }
-
-//   # google_compute_firewall.ssh will be created
-//   + resource "google_compute_firewall" "ssh" {
-//       + creation_timestamp = (known after apply)
-//       + destination_ranges = (known after apply)
-//       + direction          = (known after apply)
-//       + enable_logging     = (known after apply)
-//       + id                 = (known after apply)
-//       + name               = "allow-ssh"
-//       + network            = "default"
-//       + priority           = 1000
-//       + project            = "labgce-424207"
-//       + self_link          = (known after apply)
-//       + source_ranges      = [
-//           + "0.0.0.0/0",
-//         ]
-
-//       + allow {
-//           + ports    = [
-//               + "22",
-//             ]
-//           + protocol = "tcp"
-//         }
-//     }
-
-//   # google_compute_instance.default will be created
-//   + resource "google_compute_instance" "default" {
-//       + can_ip_forward       = false
-//       + cpu_platform         = (known after apply)
-//       + current_status       = (known after apply)
-//       + deletion_protection  = false
-//       + effective_labels     = (known after apply)
-//       + guest_accelerator    = (known after apply)
-//       + id                   = (known after apply)
-//       + instance_id          = (known after apply)
-//       + label_fingerprint    = (known after apply)
-//       + machine_type         = "f1-micro"
-//       + metadata             = {
-//           + "ssh-keys" = <<-EOT
-//                 gce-adm:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEqXmynqVfn5dKV8UcjuHnL6SWU8do67QO5wHUK5Gl1G
-//             EOT
-//         }
-//       + metadata_fingerprint = (known after apply)
-//       + min_cpu_platform     = (known after apply)
-//       + name                 = "gce-srv-0"
-//       + project              = "labgce-424207"
-//       + self_link            = (known after apply)
-//       + tags_fingerprint     = (known after apply)
-//       + terraform_labels     = (known after apply)
-//       + zone                 = "europe-west6-a"
-
-//       + boot_disk {
-//           + auto_delete                = true
-//           + device_name                = (known after apply)
-//           + disk_encryption_key_sha256 = (known after apply)
-//           + kms_key_self_link          = (known after apply)
-//           + mode                       = "READ_WRITE"
-//           + source                     = (known after apply)
-
-//           + initialize_params {
-//               + image                  = "ubuntu-os-cloud/ubuntu-2004-lts"
-//               + labels                 = (known after apply)
-//               + provisioned_iops       = (known after apply)
-//               + provisioned_throughput = (known after apply)
-//               + size                   = (known after apply)
-//               + type                   = (known after apply)
-//             }
-//         }
-
-//       + network_interface {
-//           + internal_ipv6_prefix_length = (known after apply)
-//           + ipv6_access_type            = (known after apply)
-//           + ipv6_address                = (known after apply)
-//           + name                        = (known after apply)
-//           + network                     = "default"
-//           + network_ip                  = (known after apply)
-//           + stack_type                  = (known after apply)
-//           + subnetwork                  = (known after apply)
-//           + subnetwork_project          = (known after apply)
-
-//           + access_config {
-//               + nat_ip       = (known after apply)
-//               + network_tier = (known after apply)
-//             }
-//         }
-//     }
-
-// Plan: 3 to add, 0 to change, 0 to destroy.
+  },
+  "type": "outputs"
+}
