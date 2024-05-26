@@ -82,18 +82,55 @@ Deliverables:
 
 - What happens if the infrastructure is deleted and then recreated with Terraform? What needs to be updated to access the infrastructure again?
 
-//TODO
-[INPUT]
+**\[INPUT\]**
 ```
 //terraform destroy command
+terraform destroy
 ```
 
-[OUTPUT]
+**\[OUTPUT\]**
 ```
+google_compute_firewall.http: Refreshing state... [id=projects/labgce-424207/global/firewalls/allow-http]
+google_compute_firewall.ssh: Refreshing state... [id=projects/labgce-424207/global/firewalls/allow-ssh]
+google_compute_instance.default: Refreshing state... [id=projects/labgce-424207/zones/europe-west6-a/instances/gce-srv-0]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+# Removed for brevity
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Changes to Outputs:
+  - gce_instance_ip = "34.65.222.7" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+google_compute_firewall.http: Destroying... [id=projects/labgce-424207/global/firewalls/allow-http]
+google_compute_firewall.ssh: Destroying... [id=projects/labgce-424207/global/firewalls/allow-ssh]
+google_compute_instance.default: Destroying... [id=projects/labgce-424207/zones/europe-west6-a/instances/gce-srv-0]
+google_compute_instance.default: Still destroying... [id=projects/labgce-424207/zones/europe-west6-a/instances/gce-srv-0, 10s elapsed]
+google_compute_firewall.http: Still destroying... [id=projects/labgce-424207/global/firewalls/allow-http, 10s elapsed]
+google_compute_firewall.ssh: Still destroying... [id=projects/labgce-424207/global/firewalls/allow-ssh, 10s elapsed]
+google_compute_firewall.http: Destruction complete after 11s
+google_compute_firewall.ssh: Destruction complete after 11s
+google_compute_instance.default: Still destroying... [id=projects/labgce-424207/zones/europe-west6-a/instances/gce-srv-0, 20s elapsed]
+google_compute_instance.default: Still destroying... [id=projects/labgce-424207/zones/europe-west6-a/instances/gce-srv-0, 30s elapsed]
+google_compute_instance.default: Still destroying... [id=projects/labgce-424207/zones/europe-west6-a/instances/gce-srv-0, 40s elapsed]
+google_compute_instance.default: Still destroying... [id=projects/labgce-424207/zones/europe-west6-a/instances/gce-srv-0, 50s elapsed]
+google_compute_instance.default: Destruction complete after 51s
+
+Destroy complete! Resources: 3 destroyed.
 ```
 
 Recreate the infra (no input/output needed)
 
-```
-//TODO
+```txt
+When deleting the infrastructure and recreating it, the IP address of the managed VM will change. Note that they are both on the `34.65.x.x` subnet, but the last octet will change. To access the infrastructure again, the `hosts` file in the `ansible` directory will need to be updated with the new IP address.
 ```
