@@ -26,9 +26,16 @@ You should now be able to ping the webservers group:
 ansible webservers -m ping
 ```
 
-//TODO
-[OUTPUT]
+**\[OUTPUT\]**
+
 ```json
+gce_instance | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
 ```
 
 The output should be the same as before.
@@ -106,24 +113,44 @@ You can then test the new web site by pointing your browser to the
 address of the managed server. You should see the homepage showing
 "NGINX, configured by Ansible".
 
-//TODO
-[INPUT]
+**\[INPUT\]**
+
 ```bash
-curl <yourIP>
+curl 34.65.96.78 
 ```
 
-[OUTPUT]
+**\[OUTPUT\]**
 ```html
+<html>
+    <head>
+    <title>Welcome to ansible</title> </head>
+    <body>
+    <h1>nginx, configured by Ansible</h1>
+    <p>If you can see this, Ansible successfully installed nginx.</p>
+    <p>Ansible managed</p>
+    <p>Some facts Ansible gathered about this machine:
+    <table>
+        <tr><td>OS family:</td><td>Debian</td></tr>
+        <tr><td>Distribution:</td><td>Ubuntu</td></tr>
+        <tr><td>Distribution version:</td><td>20.04</td></tr>
+    </table>
+    </p>
+    </body>
+</html>
 ```
 
 Deliverables:
 
 - Explain the usage of each file and its contents, add comments to the different blocks if needed (we must ensure that you understood what you have done). Link to the online documentation. Link to the online documentation.
 
-//TODO
-|FileName|Explanation|
-|:--|:--|
-||||
-
+| FileName      | Explanation                                    |
+| :------------ | :--------------------------------------------- |
+| hosts         | Instances that ansible will manage             |
+| web.yml       | Playbook that will install and configure nginx |
+| nginx.conf    | Configuration file for nginx                   |
+| index.html.j2 | Template for the homepage of the web site      |
+| ansible.cfg   | Ansible configuration file                     |
 
 * Deliver a folder "ansible" with your configuration.
+
+See the [ansible](ansible) folder.

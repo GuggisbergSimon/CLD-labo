@@ -1,0 +1,27 @@
+- name: Configure webserver with NGINX
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+    - name: Copy NGINX config file
+      ansible.builtin.copy:
+        src: "/home/acm/Documents/heig/CLD/lab/Labo06/ansible/playbooks/files/nginx.conf"
+        dest: /etc/nginx/sites-available/default
+    - name: Enable the config file via symbolic link
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+    - name: Template index.html.j2 to index.html
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: /usr/share/nginx/html/index.html
+        mode: "0644"
+    - name: Restart NGINX
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
